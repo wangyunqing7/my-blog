@@ -17,6 +17,9 @@ Thumbs.db
 *.swo
 *~
 
+# Obsidian
+.obsidian/
+
 # Temporary files
 *.tmp
 *.log
