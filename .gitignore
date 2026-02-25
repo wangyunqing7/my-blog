@@ -20,6 +20,9 @@ Thumbs.db
 # Obsidian
 .obsidian/
 
+# Claude
+.claude/
+
 # Temporary files
 *.tmp
 *.log
