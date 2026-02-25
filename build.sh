@@ -23,6 +23,9 @@ hugo version
 echo "==> Initializing Git submodules..."
 git submodule update --init --recursive
 
+echo "==> Cleaning old build..."
+rm -rf public/
+
 echo "==> Building site..."
 hugo --minify
 
