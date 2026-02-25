@@ -1,0 +1,10 @@
+{
+  "buildCommand": "hugo --minify",
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ]
+}
