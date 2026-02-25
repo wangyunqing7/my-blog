@@ -6,7 +6,7 @@ theme: PaperMod
 # 网站基本信息
 params:
   # 作者信息
-  author: "你的名字"
+  author: "王云卿"
 
   # 网站描述
   description: "记录学习与生活的个人博客"
@@ -24,14 +24,15 @@ params:
 
   # 主页配置
   homeInfoParams:
-    Title: "你好，欢迎来到我的博客 👋"
+    Title: "你好，我是王云卿 👋"
     Content: >
+      - 学生 · 程序员 · 电脑爱好者
       - 这里记录我的技术学习、生活点滴
 
   # 社交链接（可选）
   socialIcons:
     - name: github
-      url: "https://github.com/yourusername"
+      url: "https://github.com/wangyunqing7"
 
 # 菜单配置
 menu:
