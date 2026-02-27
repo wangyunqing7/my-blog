@@ -9,10 +9,12 @@
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
 {{- $latestPosts := first 3 $pages }}
 
+{{- $user_preferred := or site.Params.disableSpecial1stPost site.Params.homeInfoParams }}
+
 {{- range $index, $page := $latestPosts }}
 
 {{- $class := "post-entry" }}
-{{- if (and $.IsHome (eq $index 0)) }}
+{{- if (and $.IsHome (eq $index 0) (not $user_preferred)) }}
 {{- $class = "first-entry" }}
 {{- end }}
 
