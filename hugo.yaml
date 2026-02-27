@@ -5,6 +5,10 @@ theme: PaperMod
 
 # 网站基本信息
 params:
+  # 主内容区域（首页文章列表来源）
+  mainSections:
+    - posts
+
   # 作者信息
   author: "王云卿"
 

@@ -1,0 +1,16 @@
+/* 自定义样式 */
+.more-posts-link .btn {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.more-posts-link .btn:hover {
+  background: var(--primary);
+  color: var(--entry);
+}
