@@ -1,5 +1,6 @@
 {
   "buildCommand": "chmod a+x build.sh && ./build.sh",
+  "installCommand": "git submodule update --init --recursive",
   "outputDirectory": "public",
   "rewrites": [
     {
