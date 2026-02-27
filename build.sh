@@ -20,9 +20,6 @@ export PATH="${HOME}/.local/hugo:${PATH}"
 echo "==> Hugo version:"
 hugo version
 
-echo "==> Initializing Git submodules..."
-git submodule update --init --recursive
-
 echo "==> Cleaning old build..."
 rm -rf public/
 
