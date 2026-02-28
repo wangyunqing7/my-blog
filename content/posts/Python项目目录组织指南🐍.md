@@ -204,3 +204,13 @@ pip install -e .
 **记住**：你的项目结构是你给未来的自己（和同事）的一封信——告诉他们这个项目是如何组织的，如何优雅地修改和扩展它。
 
 从今天开始，给每个 Python 项目一个像样的家吧。
+
+---
+
+## 参考资料
+
+- [Python Packaging User Guide - src layout vs flat layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/)
+- [Real Python - project layout](https://realpython.com/ref/best-practices/project-layout/)
+- [The Hitchhiker's Guide to Python - Structuring Your Project](https://docs.python-guide.org/writing/structure/)
+- [pyOpenSci - Python Package Structure](https://www.pyopensci.org/python-package-guide/package-structure-code/python-package-structure.html)
+- [Hitchhiker's Guide to Python](https://docs.python-guide.org/)
