@@ -2,7 +2,7 @@
    自定义宽度设置
    ======================================== */
 :root {
-  --main-width: 1000px;  /* 覆盖主题默认的 720px */
+  --main-width: 1000px;
 }
 
 /* ========================================
@@ -28,57 +28,61 @@
    右侧 TOC 侧边栏样式
    ======================================== */
 
-/* 主内容区：使用自定义宽度（1000px） */
 .post-single-content {
   position: relative;
-  max-width: var(--main-width);  /* 使用自定义的 1000px */
+  max-width: var(--main-width);
   margin-left: auto;
   margin-right: auto;
 }
 
-/* 右侧 TOC 侧边栏 - 默认隐藏 */
 .toc-sidebar {
   display: none;
 }
 
 /* 大屏幕：显示右侧 TOC
-   断点从 1100px 调整到 1300px，以适配新的内容宽度
-   计算公式：1000px 内容 + 280px TOC + 48px 内边距 ≈ 1328px
+   断点从 1300px 调整到 1200px（TOC缩小后可以更早显示）
 */
-@media (min-width: 1300px) {
-  /* 主内容容器：为侧边栏留出空间 */
+@media (min-width: 1200px) {
   .post-single {
-    padding-right: 280px;
+    padding-right: 200px;
   }
 
   .toc-sidebar {
     display: block;
     position: fixed;
-    /* 居中定位在主内容右侧：主内容中心 + 半宽度 + 间距 */
     left: 50%;
     margin-left: calc(var(--main-width) / 2 + var(--gap));
-    top: calc(var(--header-height) + 40px);
-    width: 260px;
-    max-height: calc(100vh - 100px);
+    top: calc(var(--header-height) + 30px);
+    width: 180px;
+    max-height: calc(100vh - var(--header-height) - 50px);
     overflow-y: auto;
     z-index: 10;
+    bottom: 20px;
   }
 
   .toc {
     border: 1px solid var(--border);
     background: var(--code-bg);
     border-radius: var(--radius);
-    padding: 16px;
+    padding: 10px;
   }
 
   .toc-title {
     font-weight: bold;
-    margin-bottom: 12px;
-    font-size: 1.1em;
+    margin-bottom: 8px;
+    font-size: 0.95em;
     color: var(--primary);
   }
 
-  /* TOC 列表样式优化 */
+  /* 只显示h2标题，隐藏h1和h3+ */
+  .toc nav > ul > li > a {
+    display: none;
+  }
+
+  .toc nav ul ul {
+    display: none;
+  }
+
   .toc nav ul {
     padding-left: 0;
     margin: 0;
@@ -86,17 +90,17 @@
   }
 
   .toc nav ul li {
-    margin: 4px 0;
+    margin: 3px 0;
   }
 
   .toc nav ul li a {
     display: block;
-    padding: 4px 8px;
+    padding: 3px 6px;
     color: var(--secondary);
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 3px;
     transition: background 0.2s ease, color 0.2s ease;
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 
   .toc nav ul li a:hover {
@@ -104,19 +108,9 @@
     color: var(--primary);
   }
 
-  /* 二级、三级标题缩进 */
-  .toc nav ul ul {
-    padding-left: 16px;
-    margin-top: 4px;
-  }
-
-  .toc nav ul ul li a {
-    font-size: 0.85em;
-  }
-
   /* 滚动条样式 */
   .toc-sidebar::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
 
   .toc-sidebar::-webkit-scrollbar-track {
@@ -125,7 +119,7 @@
 
   .toc-sidebar::-webkit-scrollbar-thumb {
     background: var(--border);
-    border-radius: 3px;
+    border-radius: 2px;
   }
 
   .toc-sidebar::-webkit-scrollbar-thumb:hover {
