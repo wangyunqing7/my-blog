@@ -2,6 +2,7 @@
 date: 2026-03-02T15:00:00+08:00
 draft: false
 title: 双持设备 + WSL2：一年后，我终于找到了最佳生产力方案
+slug: dual-device-wsl2-productivity-setup
 tags:
   - WSL2
   - 生产力
