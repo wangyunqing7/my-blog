@@ -19,11 +19,9 @@
    右侧 TOC 侧边栏样式
    ======================================== */
 
-/* 两栏布局容器 */
-.post-single-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--gap);
+/* 主内容区保持原有布局 */
+.post-single-content {
+  position: relative;
 }
 
 /* 右侧 TOC 侧边栏 - 默认隐藏 */
@@ -31,21 +29,21 @@
   display: none;
 }
 
-/* 大屏幕：显示右侧 TOC */
-@media (min-width: 1200px) {
-  .post-single-container {
-    grid-template-columns: 1fr 260px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* 大屏幕：显示右侧 TOC（不挤压主内容） */
+@media (min-width: 1400px) {
+  .post-single-content {
+    margin-right: 280px;  /* 为侧边栏留出空间 */
   }
 
   .toc-sidebar {
     display: block;
-    position: sticky;
+    position: fixed;
+    right: calc((100vw - 1200px) / 2 - 280px);  /* 跟随主内容右侧 */
     top: calc(var(--header-height) + 40px);
-    height: fit-content;
+    width: 260px;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
+    z-index: 10;
   }
 
   .toc {
