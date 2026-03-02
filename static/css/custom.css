@@ -1,4 +1,13 @@
-/* 自定义样式 */
+/* ========================================
+   自定义宽度设置
+   ======================================== */
+:root {
+  --main-width: 1000px;  /* 覆盖主题默认的 720px */
+}
+
+/* ========================================
+   自定义样式
+   ======================================== */
 .more-posts-link .btn {
   display: inline-block;
   padding: 0.5rem 1.5rem;
@@ -19,10 +28,10 @@
    右侧 TOC 侧边栏样式
    ======================================== */
 
-/* 主内容区：保持主题默认宽度（720px + padding） */
+/* 主内容区：使用自定义宽度（1000px） */
 .post-single-content {
   position: relative;
-  max-width: var(--main-width);  /* 使用主题定义的 720px */
+  max-width: var(--main-width);  /* 使用自定义的 1000px */
   margin-left: auto;
   margin-right: auto;
 }
@@ -32,8 +41,11 @@
   display: none;
 }
 
-/* 大屏幕：显示右侧 TOC（不挤压主内容） */
-@media (min-width: 1100px) {
+/* 大屏幕：显示右侧 TOC
+   断点从 1100px 调整到 1300px，以适配新的内容宽度
+   计算公式：1000px 内容 + 280px TOC + 48px 内边距 ≈ 1328px
+*/
+@media (min-width: 1300px) {
   /* 主内容容器：为侧边栏留出空间 */
   .post-single {
     padding-right: 280px;
