@@ -47,7 +47,7 @@ params:
 # Google Analytics
 services:
   googleAnalytics:
-    ID: G-XXXXXXXXXX  # 替换为你的 GA4 Measurement ID
+    ID: G-KPV2PT60K0 # 替换为你的 GA4 Measurement ID
 
 # 菜单配置
 menu:
