@@ -25,6 +25,8 @@ params:
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
+  ShowToc: true
+  TocOpen: true
 
   # 主页配置
   homeInfoParams:
