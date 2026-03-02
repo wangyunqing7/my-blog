@@ -28,9 +28,6 @@ params:
   ShowToc: true
   TocOpen: true
 
-  # 封面图设置
-  cover:
-    linkFullImages: true  # 列表页也显示封面图
 
   # 主页配置
   homeInfoParams:
