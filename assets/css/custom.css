@@ -14,3 +14,105 @@
   background: var(--primary);
   color: var(--entry);
 }
+
+/* ========================================
+   右侧 TOC 侧边栏样式
+   ======================================== */
+
+/* 两栏布局容器 */
+.post-single-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
+/* 右侧 TOC 侧边栏 - 默认隐藏 */
+.toc-sidebar {
+  display: none;
+}
+
+/* 大屏幕：显示右侧 TOC */
+@media (min-width: 1200px) {
+  .post-single-container {
+    grid-template-columns: 1fr 260px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .toc-sidebar {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .toc {
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+
+  .toc-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+    color: var(--primary);
+  }
+
+  /* TOC 列表样式优化 */
+  .toc nav ul {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .toc nav ul li {
+    margin: 4px 0;
+  }
+
+  .toc nav ul li a {
+    display: block;
+    padding: 4px 8px;
+    color: var(--secondary);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-size: 0.9em;
+  }
+
+  .toc nav ul li a:hover {
+    background: var(--border);
+    color: var(--primary);
+  }
+
+  /* 二级、三级标题缩进 */
+  .toc nav ul ul {
+    padding-left: 16px;
+    margin-top: 4px;
+  }
+
+  .toc nav ul ul li a {
+    font-size: 0.85em;
+  }
+
+  /* 滚动条样式 */
+  .toc-sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .toc-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc-sidebar::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  .toc-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--tertiary);
+  }
+}
