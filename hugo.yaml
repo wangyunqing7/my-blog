@@ -28,6 +28,15 @@ params:
   ShowToc: true
   TocOpen: true
 
+  # 封面图设置
+  cover:
+    linkFullImages: true  # 列表页也显示封面图
+
+# Google Analytics
+services:
+  googleAnalytics:
+    ID: G-XXXXXXXXXX  # 替换为你的 GA4 Measurement ID
+
   # 主页配置
   homeInfoParams:
     Title: "你好，我是王云卿 👋"

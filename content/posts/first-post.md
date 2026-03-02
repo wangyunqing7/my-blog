@@ -7,6 +7,8 @@ tags:
   - 开始
 categories:
   - 日记
+slug: hello-world
+description: 这是我用 Hugo + PaperMod 搭建的个人博客的第一篇文章，记录一个开始。
 ---
 
 ## 你好，世界！

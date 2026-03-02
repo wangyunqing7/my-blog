@@ -8,6 +8,11 @@ tags:
   - 社交推理
 categories:
   - 游戏攻略
+slug: goose-goose-duck-guide
+description: 鹅鸭杀 45+ 种角色逐一解析，涵盖鹅、鸭、中立三大阵营的技能与胜利条件，无论你是新手还是老玩家，这份攻略都能让你在局中更有底气。
+cover:
+  image: /images/goose-duck-cover.jpg
+  alt: 鹅鸭杀角色攻略封面
 ---
 
 ## 🎮 开篇：为什么鹅鸭杀如此迷人？

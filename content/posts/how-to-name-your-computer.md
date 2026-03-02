@@ -9,6 +9,8 @@ tags:
   - 经典
 categories:
   - 技术杂谈
+slug: how-to-name-your-computer
+description: 1989 年的 RFC 1178 至今仍是计算机命名的最佳参考。Don Libes 用幽默的笔触总结了哪些名字会让你后悔，以及什么样的命名才经得起时间考验。
 ---
 
 > "Is up down?" — 当一台名为 "up" 的机器宕机时，这就是你会听到的困惑。
