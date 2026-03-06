@@ -216,7 +216,7 @@ WSL2 = 在家里盖了一间工具房
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [Linux vs Windows: Complete Comparison Guide 2026](https://www.codezion.com/blog/linux-vs-windows-complete-comparison-guide/) - 完整对比指南
 - [Linux vs Windows for Development in 2025](https://dev.to/afonso_faro_23584ec6be099/linux-vs-windows-for-development-in-2025-lc0) - 2025 开发环境对比

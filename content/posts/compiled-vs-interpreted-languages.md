@@ -310,7 +310,7 @@ Python 全包办、开销大
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [Fast Programming Languages 2025: Speed Champions Ranked](https://mashblog.com/posts/fast-programming-languages-2025-speed-champions-ranked) - 2025 年编程语言性能排名
 - [C++ vs Python: A Performance Showdown](https://www.oreateai.com/blog/c-vs-python-a-performance-showdown/) - C++ 与 Python 性能对比

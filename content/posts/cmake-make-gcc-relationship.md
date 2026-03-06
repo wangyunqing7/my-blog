@@ -314,7 +314,7 @@ GCC/g++/Clang 真正把代码编译成机器码
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [CMake Official Documentation](https://cmake.org/documentation/) - CMake 官方文档
 - [Introduction to the C++ Build Process and Tools](https://www.studyplan.dev/cmake/cpp-build-process) - C++ 构建过程详解

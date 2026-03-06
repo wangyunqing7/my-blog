@@ -289,7 +289,7 @@ Qt6Widgets.dll 窗口控件
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [Qt 6 - Build System Changes](https://doc.qt.io/qt-6/qt6-buildsystem.html) - Qt6 官方构建系统文档
 - [Qt 6 QML Book - Build Systems](https://www.qt.io/product/qt6/qml-book/ch17-qtcpp-build-system) - Qt 构建系统详解

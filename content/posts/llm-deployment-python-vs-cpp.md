@@ -311,7 +311,7 @@ C++ 部署 = 把实验成果做成产品卖出去
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [vLLM or llama.cpp: Choosing the right LLM inference engine](https://developers.redhat.com/articles/2025/09/30/vllm-or-llamacpp-choosing-right-llm-inference-engine-your-use-case) - Red Hat 推理引擎对比
 - [llama.cpp vs Ollama vs vLLM: When to Use Each](https://insiderllm.com/guides/llamacpp-vs-ollama-vs-vllm/) - 框架选择指南

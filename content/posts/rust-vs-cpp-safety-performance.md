@@ -302,7 +302,7 @@ Rust  = 给你一把带安全保护装置的刀
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [Rust VS C++ Comparison for 2026](https://blog.jetbrains.com/rust/2025/12/16/rust-vs-cpp-comparison-for-2026/) - JetBrains 2026 对比分析
 - [C++ vs Rust Memory Safety - Practical Examples](https://mecanik.dev/en/posts/c++-vs-rust-memory-safety-practical-examples-with-modern-c++/) - 内存安全实践对比

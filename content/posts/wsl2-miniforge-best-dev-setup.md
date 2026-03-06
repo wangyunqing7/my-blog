@@ -385,7 +385,7 @@ Miniforge 管理环境
 
 ---
 
-## 参考文献
+## 参考资料
 
 - [Best Python Setup – WSL and Miniforge Tutorial](https://pythonchan.com/?p=15021) - WSL + Miniforge 入门教程
 - [Making Windows Disappear: A Linux Developer's Guide to WSL2](https://medium.com/%40faranheit/making-windows-disappear-a-linux-developers-guide-to-a-production-grade-wsl2-setup-ae43473e12e8) - 生产级 WSL2 配置
