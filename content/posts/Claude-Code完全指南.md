@@ -16,6 +16,18 @@ categories:
 
 Claude Code 是 Anthropic 推出的命令行 AI 助手，它让 Claude 从聊天框里"走出来"，真正融入你的开发工作流。
 
+<div class="video-container">
+<iframe
+    src="//player.bilibili.com/player.html?isOutside=true&aid=116211094461421&bvid=BV1VWwAzHEd5&cid=36629974659&p=1&autoplay=0&danmaku=0"
+    width="100%"
+    height="500"
+    scrolling="no"
+    frameborder="0"
+    sandbox="allow-forms allow-same-origin allow-scripts allow-presentation"
+    allowfullscreen>
+</iframe>
+</div>
+
 ## 01. 什么是 AI 编码助手？
 
 在深入 Claude Code 之前，我们需要先理解 AI 编码助手的工作原理。这不仅仅是一个能写代码的工具，而是一个使用语言模型来处理复杂编程任务的精密系统。
