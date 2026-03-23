@@ -34,6 +34,9 @@ languages:
 
 # 网站基本信息
 params:
+  # 作者信息（RSS 等功能需要）
+  author: "王云卿"
+
   # 主内容区域（首页文章列表来源）
   mainSections:
     - posts
