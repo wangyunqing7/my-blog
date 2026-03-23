@@ -12,6 +12,7 @@ categories:
   - 技术指南
 slug: linux-vs-windows-for-developers
 description: 有人说 Linux 更适合编程，Windows 只是办公系统。真的吗？这篇文章用最真实的数据和对比，告诉你两个系统在开发效率、速度、多线程上的真实差异。基于 2025 年最新对比分析。
+comments: true
 ---
 
 # Linux vs Windows：程序员该选哪个系统？

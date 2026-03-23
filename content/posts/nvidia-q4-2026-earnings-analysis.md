@@ -12,6 +12,7 @@ categories:
   - 科技观察
 slug: nvidia-q4-2026-earnings
 description: 英伟达 2026 财年 Q4 财报深度解读：681 亿美元营收远超预期，Blackwell 架构拉开新周期序幕，算力需求是否真的没有天花板？
+comments: true
 ---
 
 ## 🎯 开篇：一场预期之上的"炸裂"财报

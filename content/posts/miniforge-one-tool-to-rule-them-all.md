@@ -12,6 +12,7 @@ categories:
   - 技术指南
 slug: miniforge-one-tool-to-rule-them-all
 description: 被 venv、virtualenv、pyenv、Poetry、pipenv、uv 搞晕了？作为一个 Python + C++ 开发者，其实你只需要一个工具——Miniforge。这篇文章告诉你为什么，以及怎么用好它。
+comments: true
 ---
 
 # Python 和 C++ 开发者，一个 Miniforge 足矣

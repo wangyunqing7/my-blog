@@ -11,6 +11,7 @@ categories:
   - 深度思考
 description: 解读Citrini Research关于'2028全球智能危机'的前瞻性分析
 slug: ai-intelligence-crisis-2028
+comments: true
 ---
 
 ## 引言：一个反直觉的问题

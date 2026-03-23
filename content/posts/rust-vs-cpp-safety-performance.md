@@ -1,4 +1,5 @@
 ---
+comments: true
 date: 2026-03-06T22:30:00+08:00
 draft: false
 title: Rust vs C++：安全换性能？编译期内存检查到底有多强
@@ -13,6 +14,7 @@ categories:
 slug: rust-vs-cpp-safety-performance
 description: C++ 允许你随便掌控内存，但崩了算你的。Rust 在编译期就把所有内存错误拦住。这篇文章讲透 Rust 和 C++ 在安全性上的本质区别。基于 2025 年最新对比分析。
 ---
+comments: true
 
 # Rust vs C++：安全换性能？
 
@@ -301,6 +303,7 @@ Rust  = 给你一把带安全保护装置的刀
 **趋势是明确的：** 新项目优先 Rust，老项目 C++ + Rust 混合。
 
 ---
+comments: true
 
 ## 参考资料
 

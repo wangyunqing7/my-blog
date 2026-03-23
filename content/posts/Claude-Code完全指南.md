@@ -10,6 +10,7 @@ tags:
   - Anthropic
 categories:
   - 技术教程
+comments: true
 ---
 
 想象一下，如果你有一个超级聪明的编程搭档——它不仅能帮你写代码，还能读懂整个项目结构，自动运行命令，甚至帮你审查代码。这不是科幻小说，而是 Claude Code 带来的现实。

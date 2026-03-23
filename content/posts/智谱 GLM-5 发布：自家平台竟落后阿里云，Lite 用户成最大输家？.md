@@ -11,6 +11,7 @@ categories:
   - 科技观察
 slug: zhipu-glm5-release-analysis
 description: 智谱 GLM-5 开源发布，号称接近 Claude Opus 4.5，却闹出自家平台比第三方阿里云还慢上线的笑话。Lite 用户究竟怎么了？
+comments: true
 ---
 
 ## 🎭 开篇：一场讽刺的"首发"

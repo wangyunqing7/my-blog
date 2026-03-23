@@ -5,6 +5,7 @@ draft: false
 tags: ["自动驾驶", "Carla", "仿真器", "坐标系"]
 categories: ["技术"]
 author: "Yunqing"
+comments: true
 ---
 
 自动驾驶仿真器 Carla 是一款基于 Unreal Engine 开发的开源仿真平台，广泛应用于自动驾驶算法的训练与测试。然而，许多初学者在使用 Carla 时会遇到一个令人困惑的问题：**Carla 的坐标系与常见的车辆动力学标准不一致**。本文将深入剖析 Carla 的坐标系统、智能体控制方式，以及与官方标准的差异。
