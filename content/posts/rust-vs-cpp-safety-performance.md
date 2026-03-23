@@ -14,7 +14,6 @@ categories:
 slug: rust-vs-cpp-safety-performance
 description: C++ 允许你随便掌控内存，但崩了算你的。Rust 在编译期就把所有内存错误拦住。这篇文章讲透 Rust 和 C++ 在安全性上的本质区别。基于 2025 年最新对比分析。
 ---
-comments: true
 
 # Rust vs C++：安全换性能？
 
