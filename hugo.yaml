@@ -50,8 +50,6 @@ params:
   ShowCodeCopyButtons: true
   ShowToc: true
   TocOpen: true
-  ShowLastUpdated: true
-  ShowScrollProgressBar: true
 
   # 社交链接（可选）
   socialIcons:
