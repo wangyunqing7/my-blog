@@ -2,6 +2,7 @@
 title: "Carla 仿真器坐标系与智能体控制详解"
 date: 2026-03-11T10:00:00+08:00
 draft: false
+slug: carla-coordinate-system-and-agent-control
 tags: ["自动驾驶", "Carla", "仿真器", "坐标系"]
 categories: ["技术"]
 author: "Yunqing"

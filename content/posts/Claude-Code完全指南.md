@@ -1,6 +1,7 @@
 ---
 date: 2026-03-11T21:00:00+08:00
 draft: false
+slug: claude-code-complete-guide
 title: Claude Code 完全指南：从入门到精通
 tags:
   - Claude Code
