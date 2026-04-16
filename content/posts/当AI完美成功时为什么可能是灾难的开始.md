@@ -9,6 +9,7 @@ tags:
   - 情景分析
 categories:
   - 深度思考
+author: "王云卿"
 description: 解读Citrini Research关于'2028全球智能危机'的前瞻性分析
 slug: ai-intelligence-crisis-2028
 comments: true

@@ -1,12 +1,13 @@
 baseURL: https://www.wangyunqing.top/
-defaultContentLanguage: zh-cn
+defaultContentLanguage: zh
 title: 我的个人博客
 theme: PaperMod
 
-# 多语言配置
+# 语言配置
 languages:
-  zh-cn:
+  zh:
     languageName: "简体中文"
+    languageCode: "zh-CN"
     weight: 1
     title: "我的个人博客"
     author: "王云卿"
@@ -18,24 +19,13 @@ languages:
         Content: >
           - 学生 · 程序员 · 电脑爱好者
           - 这里记录我的技术学习、生活点滴
-  en:
-    languageName: "English"
-    weight: 2
-    title: "My Blog"
-    author: "Wang Yunqing"
-    description: "A personal blog about learning and life"
-    keywords: ["blog", "technology", "life"]
-    params:
-      homeInfoParams:
-        Title: "Hi, I'm Wang Yunqing 👋"
-        Content: >
-          - Student · Programmer · Tech Enthusiast
-          - Sharing my learning journey and life notes
 
 # 网站基本信息
 params:
   # 作者信息（RSS 等功能需要）
   author: "王云卿"
+  description: "记录学习、技术实践与生活思考的个人博客"
+  keywords: ["博客", "技术", "生活"]
 
   # 主内容区域（首页文章列表来源）
   mainSections:

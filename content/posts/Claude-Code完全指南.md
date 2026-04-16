@@ -11,6 +11,8 @@ tags:
   - Anthropic
 categories:
   - 技术教程
+author: "王云卿"
+description: "从安装、核心工作流、MCP、Hooks 到 GitHub 集成，一篇文章带你系统掌握 Claude Code 的实际用法。"
 comments: true
 ---
 

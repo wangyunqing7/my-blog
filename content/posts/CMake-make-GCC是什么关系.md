@@ -12,6 +12,7 @@ categories:
   - 技术指南
 slug: cmake-make-gcc-relationship
 description: 你知道 CMake 生成 Makefile，make 调用编译器，GCC 真正编译代码。但它们到底怎么协作？这篇文章用最直白的方式，从代码到 exe 的完整流程讲清楚。
+author: "王云卿"
 comments: true
 ---
 

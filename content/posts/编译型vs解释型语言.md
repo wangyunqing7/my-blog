@@ -12,6 +12,7 @@ categories:
   - 技术指南
 slug: compiled-vs-interpreted-languages
 description: 为什么 C++ 比 Python 快那么多？是编译型语言天生优势，还是 Python 太慢？这篇文章用最本质的方式，一次性讲透两种语言的运行原理差异。基于 2025 年最新性能基准数据。
+author: "王云卿"
 comments: true
 ---
 

@@ -13,6 +13,7 @@ categories:
   - 技术指南
 slug: qt-toolchain-complete-guide
 description: 刚学 Qt，被编译器、构建工具、调试器、库路径、运行环境搞晕了？这篇文章用最通俗的比喻，把这 5 个组件一次性讲透，让你彻底理解 Qt 从代码到 exe 的完整流程。基于 Qt6 最新标准编写。
+author: "王云卿"
 ---
 
 # Qt 编译工具链完全指南：5 个组件一次讲透

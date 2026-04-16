@@ -10,6 +10,7 @@ categories:
   - 技术指南
 slug: python-project-structure-guide
 description: 打开几个月前的项目，一堆散落的 .py 文件让你不知从何下手？这篇文章用实际案例教你建立清晰的 Python 项目目录结构，从入门脚本到生产级应用，一步步告别混乱。
+author: "王云卿"
 comments: true
 ---
 

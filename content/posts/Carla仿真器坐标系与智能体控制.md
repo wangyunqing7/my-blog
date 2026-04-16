@@ -5,7 +5,8 @@ draft: false
 slug: carla-coordinate-system-and-agent-control
 tags: ["自动驾驶", "Carla", "仿真器", "坐标系"]
 categories: ["技术"]
-author: "Yunqing"
+author: "王云卿"
+description: "系统讲清 Carla 的左手坐标系、车辆局部坐标系，以及它与 ISO 8855 等自动驾驶标准的差异。"
 comments: true
 ---
 
