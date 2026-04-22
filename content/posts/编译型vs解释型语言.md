@@ -2,6 +2,10 @@
 date: 2026-03-06T22:00:00+08:00
 draft: false
 title: 编译型 vs 解释型语言：为什么 C++ 比 Python 快 50 倍？
+cover:
+  image: images/compiled-vs-interpreted-cover.png
+  alt: 编译型与解释型语言对比封面
+  caption: 编译型 vs 解释型 — 两种截然不同的代码运行方式
 tags:
   - C++
   - Python
