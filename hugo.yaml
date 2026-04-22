@@ -31,6 +31,11 @@ params:
   mainSections:
     - posts
 
+  # 网站标题栏 Logo
+  label:
+    icon: /logo.png
+    text: "我的个人博客"
+
   # 主题模式
   defaultTheme: auto
   ShowShareButtons: true
