@@ -11,21 +11,22 @@ languages:
     weight: 1
     title: "我的个人博客"
     author: "王云卿"
-    description: "记录学习与生活的个人博客"
-    keywords: ["博客", "技术", "生活"]
+    description: "车辆工程学生 | 强化学习与自动驾驶 | 技术博客"
+    keywords: ["博客", "车辆工程", "强化学习", "自动驾驶", "编程", "AI", "Linux"]
     params:
       homeInfoParams:
         Title: "你好，我是王云卿 👋"
         Content: >
-          - 学生 · 程序员 · 电脑爱好者
+          - 车辆工程学生 / 强化学习与自动驾驶方向学习者 / 技术博客作者
+          - 专注 车辆工程 · 编程 · AI · 自动驾驶 · Linux 工具链
           - 这里记录我的技术学习、生活点滴
 
 # 网站基本信息
 params:
   # 作者信息（RSS 等功能需要）
   author: "王云卿"
-  description: "记录学习、技术实践与生活思考的个人博客"
-  keywords: ["博客", "技术", "生活"]
+  description: "车辆工程学生 | 强化学习与自动驾驶方向学习者 | 技术博客作者"
+  keywords: ["博客", "车辆工程", "强化学习", "自动驾驶", "编程", "AI", "Linux"]
 
   # 主内容区域（首页文章列表来源）
   mainSections:
