@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSortedPosts, formatDate, getReadingTime } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts();
+  const tags = new Map<string, typeof posts>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      if (!tags.has(tag)) tags.set(tag, []);
+      tags.get(tag)!.push(post);
+    }
+  }
+  return [...tags.entries()].map(([tag, tagPosts]) => ({
+    params: { tag },
+    props: { tag, posts: tagPosts },
+  }));
+}
+
+const { tag, posts: tagPosts } = Astro.props;
+---
+
+<Layout title={`标签: ${tag} - Yunqing's Blog`} description={`标签「${tag}」下的所有文章。`} active="tags">
+  <main>
+    <section class="page-header">
+      <a href="/tags" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        全部标签
+      </a>
+      <h1 class="page-title">{tag}</h1>
+      <p class="page-desc">{tagPosts.length} 篇文章</p>
+    </section>
+    <section class="post-list">
+      {tagPosts.map((post) => (
+        <article class="post-card">
+          <a href={`/posts/${post.id}`} class="post-link">
+            <div class="post-meta">
+              <time class="post-date">{formatDate(post.data.date)}</time>
+              <span class="post-reading">{getReadingTime(post.body || '')} 分钟</span>
+            </div>
+            <h2 class="post-title">{post.data.title}</h2>
+            <p class="post-excerpt">{post.data.description}</p>
+          </a>
+        </article>
+      ))}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .page-header { padding: 3rem 0 3.5rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--warm-500); transition: color 0.2s ease; margin-bottom: 1rem; }
+  .back-link:hover { color: var(--terracotta); }
+  .page-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--warm-900); letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+  .post-list { display: flex; flex-direction: column; }
+  .post-card { border-bottom: 1px solid var(--cream-300); }
+  .post-card:last-child { border-bottom: none; }
+  .post-link { display: block; padding: 2rem 0; transition: transform 0.2s ease; }
+  .post-link:hover { transform: translateX(4px); }
+  .post-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.625rem; }
+  .post-date { font-size: 0.8125rem; font-weight: 500; color: var(--warm-400); }
+  .post-reading { font-size: 0.75rem; color: var(--warm-400); background: var(--cream-200); padding: 0.2rem 0.6rem; border-radius: 100px; }
+  .post-title { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 500; line-height: 1.4; color: var(--warm-900); letter-spacing: -0.01em; margin-bottom: 0.625rem; }
+  .post-link:hover .post-title { color: var(--terracotta); }
+  .post-excerpt { font-size: 0.9375rem; line-height: 1.7; color: var(--warm-500); max-width: 540px; }
+  @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } .post-link { padding: 1.5rem 0; } }
+</style>

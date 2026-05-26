@@ -1,0 +1,108 @@
+---
+interface Props {
+  active?: string;
+}
+
+const { active = '' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: '首页', name: 'home' },
+  { href: '/posts', label: '文章', name: 'posts' },
+  { href: '/tags', label: '标签', name: 'tags' },
+  { href: '/archives', label: '归档', name: 'archives' },
+  { href: '/search', label: '搜索', name: 'search' },
+  { href: '/about', label: '关于', name: 'about' },
+];
+---
+
+<nav>
+  <a href="/" class="logo">Yunqing</a>
+  <div class="nav-links">
+    {navItems.map((item) => (
+      <a href={item.href} class:list={[active === item.name && 'active']}>
+        {item.label}
+      </a>
+    ))}
+    <button class="theme-toggle" id="theme-toggle" aria-label="切换主题">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<style>
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--warm-900);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--warm-500);
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--warm-900);
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: var(--warm-500);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .theme-toggle:hover {
+    color: var(--warm-900);
+  }
+
+  .icon-moon { display: none; }
+  .icon-sun { display: block; }
+
+  :global([data-theme="dark"]) .icon-moon { display: block; }
+  :global([data-theme="dark"]) .icon-sun { display: none; }
+
+  @media (max-width: 480px) {
+    nav { padding: 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.8125rem; }
+  }
+</style>
+
+<script>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+</script>

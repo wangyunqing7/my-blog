@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAllTags } from '../../lib/utils';
+
+const tagMap = await getAllTags();
+const sortedTags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<Layout title="标签 - Yunqing's Blog" description="按标签浏览文章。" active="tags">
+  <main>
+    <section class="page-header">
+      <h1 class="page-title">标签</h1>
+      <p class="page-desc">按主题浏览所有文章</p>
+    </section>
+    <section class="tag-cloud">
+      {sortedTags.map(([tag, count]) => (
+        <a href={`/tags/${tag}`} class="tag-item">
+          <span class="tag-name">{tag}</span>
+          <span class="tag-count">{count}</span>
+        </a>
+      ))}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .page-header { padding: 3rem 0 3.5rem; }
+  .page-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--warm-900); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+  .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .tag-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--cream-100); border: 1px solid var(--cream-300); border-radius: 100px; font-size: 0.9375rem; color: var(--warm-700); transition: all 0.2s ease; }
+  .tag-item:hover { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+  .tag-count { font-size: 0.75rem; color: var(--warm-400); background: var(--cream-200); padding: 0.1rem 0.5rem; border-radius: 100px; }
+  .tag-item:hover .tag-count { background: rgba(255, 255, 255, 0.2); color: white; }
+  @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } }
+</style>

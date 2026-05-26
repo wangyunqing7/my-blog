@@ -1,0 +1,49 @@
+---
+
+---
+
+<section class="comments">
+  <h2 class="comments-title">评论</h2>
+  <div class="giscus"></div>
+</section>
+
+<style>
+  .comments { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--cream-300); }
+  .comments-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--warm-900); margin-bottom: 1.5rem; }
+</style>
+
+<script>
+  const GISCUS_REPO = 'wangyunqing7/my-blog';
+  const GISCUS_REPO_ID = 'R_kgDORYTbWA';
+  const GISCUS_CATEGORY = 'Announcements';
+  const GISCUS_CATEGORY_ID = 'DIC_kwDORYTbWM4C5F3y';
+
+  if (!GISCUS_REPO_ID || !GISCUS_CATEGORY_ID) {
+    console.warn('Giscus not configured. Set GISCUS_REPO_ID and GISCUS_CATEGORY_ID.');
+  } else {
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', GISCUS_REPO);
+    script.setAttribute('data-repo-id', GISCUS_REPO_ID);
+    script.setAttribute('data-category', GISCUS_CATEGORY);
+    script.setAttribute('data-category-id', GISCUS_CATEGORY_ID);
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-lang', 'zh-CN');
+    script.setAttribute('data-loading', 'lazy');
+    script.setAttribute('data-theme', theme);
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+    const container = document.querySelector('.giscus');
+    if (container) container.appendChild(script);
+
+    const observer = new MutationObserver(() => {
+      const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (iframe) {
+        iframe.contentWindow?.postMessage({ giscus: { setConfig: { theme: newTheme } } }, 'https://giscus.app');
+      }
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  }
+</script>

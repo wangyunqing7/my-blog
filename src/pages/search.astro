@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="搜索 - Yunqing's Blog" description="搜索文章。" active="search">
+  <main>
+    <section class="page-header">
+      <h1 class="page-title">搜索</h1>
+      <p class="page-desc">在文章中查找内容</p>
+    </section>
+    <section class="search-section">
+      <input type="text" class="search-input" id="search-input" placeholder="输入关键词..." autocomplete="off" />
+      <div class="search-results" id="search-results"></div>
+      <p class="search-hint" id="search-hint">输入关键词开始搜索</p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .page-header { padding: 3rem 0 3.5rem; }
+  .page-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--warm-900); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+  .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+  .search-section { margin-top: 1rem; }
+  .search-input {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    color: var(--warm-900);
+    background: var(--cream-100);
+    border: 1.5px solid var(--cream-300);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .search-input:focus { border-color: var(--coral-400); }
+  .search-input::placeholder { color: var(--warm-300); }
+  .search-results { margin-top: 1.5rem; display: flex; flex-direction: column; }
+  .search-hint { margin-top: 2rem; text-align: center; color: var(--warm-400); font-size: 0.9375rem; }
+  .result-card { padding: 1.5rem 0; border-bottom: 1px solid var(--cream-300); }
+  .result-card:last-child { border-bottom: none; }
+  .result-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--warm-900); margin-bottom: 0.5rem; }
+  .result-title a { color: var(--warm-900); transition: color 0.2s ease; }
+  .result-title a:hover { color: var(--terracotta); }
+  .result-desc { font-size: 0.9375rem; color: var(--warm-500); line-height: 1.6; margin-bottom: 0.5rem; }
+  .result-tags { display: flex; gap: 0.5rem; }
+  .result-tag { font-size: 0.75rem; color: var(--warm-700); background: var(--cream-200); padding: 0.2rem 0.6rem; border-radius: 100px; }
+  .no-results { text-align: center; padding: 3rem 0; color: var(--warm-400); font-size: 0.9375rem; }
+  @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } }
+</style>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  function escapeHtml(str: string): string {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const results = document.getElementById('search-results')!;
+  const hint = document.getElementById('search-hint')!;
+  let fuse: Fuse<any> | null = null;
+
+  async function initFuse() {
+    const res = await fetch('/search.json');
+    const data = await res.json();
+    fuse = new Fuse(data, {
+      keys: ['title', 'description', 'tags'],
+      threshold: 0.4,
+      includeScore: true,
+    });
+  }
+  initFuse();
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim();
+    if (!query || !fuse) {
+      results.innerHTML = '';
+      hint.style.display = query ? 'none' : 'block';
+      return;
+    }
+    hint.style.display = 'none';
+    const matches = fuse.search(query);
+    if (matches.length === 0) {
+      results.innerHTML = '<p class="no-results">没有找到相关文章</p>';
+      return;
+    }
+    results.innerHTML = matches.map((m: any) => `
+      <div class="result-card">
+        <h3 class="result-title"><a href="/posts/${escapeHtml(m.item.slug)}">${escapeHtml(m.item.title)}</a></h3>
+        <p class="result-desc">${escapeHtml(m.item.description)}</p>
+        <div class="result-tags">
+          ${m.item.tags.map((t: string) => `<span class="result-tag">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+  });
+</script>

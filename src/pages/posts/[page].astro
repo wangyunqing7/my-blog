@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSortedPosts, formatDate, getReadingTime } from '../../lib/utils';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getSortedPosts();
+  return paginate(posts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout title="文章 - Yunqing's Blog" description="所有文章，关于编程、设计与生活。" active="posts">
+  <main>
+    <section class="page-header">
+      <h1 class="page-title">文章</h1>
+      <p class="page-desc">关于编程、设计与生活的碎片思考</p>
+    </section>
+    <section class="post-list">
+      {page.data.map((post: any) => (
+        <article class="post-card">
+          <a href={`/posts/${post.id}`} class="post-link">
+            <div class="post-meta">
+              <time class="post-date">{formatDate(post.data.date)}</time>
+              <span class="post-reading">{getReadingTime(post.body || '')} 分钟</span>
+            </div>
+            <h2 class="post-title">{post.data.title}</h2>
+            <p class="post-excerpt">{post.data.description}</p>
+            <div class="post-tags">
+              {post.data.tags.map((tag: string) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </a>
+        </article>
+      ))}
+    </section>
+
+    {page.lastPage > 1 && (
+      <nav class="pagination">
+        {page.url.prev && (
+          <a href={page.url.prev} class="page-btn">上一页</a>
+        )}
+        <span class="page-info">第 {page.currentPage} / {page.lastPage} 页</span>
+        {page.url.next && (
+          <a href={page.url.next} class="page-btn">下一页</a>
+        )}
+      </nav>
+    )}
+  </main>
+</Layout>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .page-header { padding: 3rem 0 3.5rem; }
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--warm-900);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+  .post-list { display: flex; flex-direction: column; }
+  .post-card { border-bottom: 1px solid var(--cream-300); }
+  .post-card:last-child { border-bottom: none; }
+  .post-link { display: block; padding: 2rem 0; transition: transform 0.2s ease; }
+  .post-link:hover { transform: translateX(4px); }
+  .post-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.625rem; }
+  .post-date { font-size: 0.8125rem; font-weight: 500; color: var(--warm-400); }
+  .post-reading { font-size: 0.75rem; color: var(--warm-400); background: var(--cream-200); padding: 0.2rem 0.6rem; border-radius: 100px; }
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--warm-900);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.625rem;
+  }
+  .post-link:hover .post-title { color: var(--terracotta); }
+  .post-excerpt { font-size: 0.9375rem; line-height: 1.7; color: var(--warm-500); margin-bottom: 1rem; max-width: 540px; }
+  .post-tags { display: flex; gap: 0.5rem; }
+  .tag { font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; letter-spacing: 0.02em; }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--cream-300);
+  }
+  .page-info {
+    font-size: 0.875rem;
+    color: var(--warm-400);
+  }
+  .page-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--warm-700);
+    background: var(--cream-100);
+    border: 1px solid var(--cream-300);
+    border-radius: 100px;
+    transition: all 0.2s ease;
+  }
+  .page-btn:hover {
+    background: var(--warm-900);
+    border-color: var(--warm-900);
+    color: var(--cream-50);
+  }
+
+  @media (max-width: 768px) {
+    .page-header { padding: 2rem 0 2.5rem; }
+    main { padding: 0 1.25rem 3rem; }
+    .post-link { padding: 1.5rem 0; }
+  }
+  @media (max-width: 480px) { main { padding: 0 1rem 3rem; } }
+</style>

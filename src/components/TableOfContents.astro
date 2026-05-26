@@ -1,0 +1,76 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const tocItems = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{tocItems.length > 0 && (
+  <nav class="toc" aria-label="目录">
+    <h2 class="toc-title">目录</h2>
+    <ul class="toc-list">
+      {tocItems.map((h) => (
+        <li class={`toc-item toc-depth-${h.depth}`}>
+          <a href={`#${h.slug}`}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toc {
+    position: fixed;
+    top: 6rem;
+    right: 2rem;
+    width: 180px;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .toc-title {
+    font-family: var(--font-serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--warm-400);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+  .toc-list { list-style: none; padding: 0; }
+  .toc-item { margin-bottom: 0.5rem; }
+  .toc-item a { font-size: 0.8125rem; line-height: 1.4; color: var(--warm-400); transition: color 0.2s ease; display: block; }
+  .toc-item a:hover { color: var(--terracotta); }
+  .toc-depth-3 { padding-left: 1rem; }
+  .toc-active a { color: var(--terracotta); font-weight: 500; }
+  @media (max-width: 1200px) { .toc { display: none; } }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute('id');
+        const tocLink = document.querySelector(`.toc a[href="#${id}"]`);
+        if (tocLink) {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.toc-item').forEach((el) => el.classList.remove('toc-active'));
+            tocLink.parentElement?.classList.add('toc-active');
+          }
+        }
+      });
+    },
+    { rootMargin: '-80px 0px -80% 0px' }
+  );
+  document.querySelectorAll('.article-content h2, .article-content h3').forEach((heading) => {
+    if (heading.id) observer.observe(heading);
+  });
+</script>

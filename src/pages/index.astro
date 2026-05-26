@@ -1,11 +1,176 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getSortedPosts, formatDate } from '../lib/utils';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const recentPosts = (await getSortedPosts()).slice(0, 3);
 ---
 
 <Layout>
-	<Welcome />
+  <main>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <p class="hero-eyebrow">欢迎来到我的小角落</p>
+      <h1 class="hero-title">
+        用文字记录<br />
+        <span class="highlight">思考与创造</span>
+      </h1>
+      <p class="hero-desc">
+        关于编程、设计与生活的碎片思考。<br />
+        偶尔更新，始终真诚。
+      </p>
+      <div class="hero-actions">
+        <a href="/posts" class="btn-primary">开始阅读</a>
+        <a href="/about" class="btn-ghost">了解更多</a>
+      </div>
+    </section>
+
+    <section class="recent">
+      <h2 class="section-title">最新文章</h2>
+      <div class="post-list">
+        {recentPosts.map((post) => (
+          <article class="post-card">
+            <span class="post-date">{formatDate(post.data.date)}</span>
+            <h3 class="post-title">
+              <a href={`/posts/${post.id}`}>{post.data.title}</a>
+            </h3>
+            <p class="post-excerpt">{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+      <a href="/posts" class="view-all">查看全部文章 &rarr;</a>
+    </section>
+
+    <section class="cta">
+      <div class="cta-inner">
+        <p class="cta-text">想收到新文章通知？</p>
+        <a href="/rss.xml" class="btn-primary">订阅 RSS</a>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  .hero {
+    position: relative;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 6rem 1.5rem 5rem;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--coral-300) 0%, var(--cream-200) 40%, transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .hero-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--coral-500);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--warm-900);
+    margin-bottom: 1.5rem;
+  }
+  .highlight { color: var(--terracotta); font-style: italic; }
+  .hero-desc {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--warm-700);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: white;
+    background: var(--terracotta);
+    border-radius: 100px;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(184, 107, 74, 0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(184, 107, 74, 0.35);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--warm-700);
+    border: 1.5px solid var(--warm-300);
+    border-radius: 100px;
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover { color: var(--warm-900); border-color: var(--warm-900); }
+  .recent { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--warm-900);
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.01em;
+  }
+  .post-list { display: flex; flex-direction: column; }
+  .post-card { padding: 2rem 0; border-bottom: 1px solid var(--cream-300); }
+  .post-card:first-child { padding-top: 0; }
+  .post-card:last-child { border-bottom: none; }
+  .post-date { font-size: 0.8125rem; font-weight: 500; color: var(--warm-400); letter-spacing: 0.02em; }
+  .post-title {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0.5rem 0;
+    letter-spacing: -0.01em;
+  }
+  .post-title a { color: var(--warm-900); transition: color 0.2s ease; }
+  .post-title a:hover { color: var(--terracotta); }
+  .post-excerpt { font-size: 0.9375rem; line-height: 1.7; color: var(--warm-500); max-width: 540px; }
+  .view-all {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--coral-500);
+    transition: color 0.2s ease;
+  }
+  .view-all:hover { color: var(--terracotta); }
+  .cta { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .cta-inner { background: var(--cream-200); border-radius: 1.25rem; padding: 3rem; text-align: center; }
+  .cta-text { font-family: var(--font-serif); font-size: 1.25rem; color: var(--warm-700); margin-bottom: 1.25rem; }
+  @media (max-width: 768px) {
+    .hero { padding: 3.5rem 1.25rem 3rem; }
+    .hero-title { font-size: clamp(2rem, 8vw, 2.75rem); }
+    .recent, .cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .cta-inner { padding: 2rem 1.5rem; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-ghost { justify-content: center; width: 100%; }
+    .post-card { padding: 1.5rem 0; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding: 2.5rem 1rem 2rem; }
+    .recent, .cta { padding-left: 1rem; padding-right: 1rem; }
+  }
+</style>

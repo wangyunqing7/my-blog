@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSortedPosts, formatDate } from '../lib/utils';
+
+const posts = await getSortedPosts();
+
+interface MonthGroup { month: string; posts: typeof posts; }
+interface YearGroup { year: number; months: MonthGroup[]; }
+
+const monthNames = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+
+const grouped: YearGroup[] = [];
+let currentYear = 0;
+let currentMonth = -1;
+
+for (const post of posts) {
+  const year = post.data.date.getFullYear();
+  const month = post.data.date.getMonth();
+  if (year !== currentYear) {
+    currentYear = year;
+    currentMonth = month;
+    grouped.push({ year, months: [{ month: monthNames[month], posts: [] }] });
+  } else if (month !== currentMonth) {
+    currentMonth = month;
+    grouped[grouped.length - 1].months.push({ month: monthNames[month], posts: [] });
+  }
+  grouped[grouped.length - 1].months[grouped[grouped.length - 1].months.length - 1].posts.push(post);
+}
+---
+
+<Layout title="归档 - Yunqing's Blog" description="所有文章按时间归档。" active="archives">
+  <main>
+    <section class="page-header">
+      <h1 class="page-title">归档</h1>
+      <p class="page-desc">按时间线浏览所有文章</p>
+    </section>
+    {grouped.map((group) => (
+      <section class="year-group">
+        <h2 class="year-title">{group.year}</h2>
+        {group.months.map((mg) => (
+          <div class="month-group">
+            <h3 class="month-title">{mg.month}</h3>
+            <ul class="archive-list">
+              {mg.posts.map((post) => (
+                <li class="archive-item">
+                  <time class="archive-date">{formatDate(post.data.date)}</time>
+                  <a href={`/posts/${post.id}`} class="archive-title">{post.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+    ))}
+  </main>
+</Layout>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .page-header { padding: 3rem 0 3.5rem; }
+  .page-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--warm-900); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+  .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+  .year-group { margin-bottom: 3rem; }
+  .year-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--coral-500); margin-bottom: 1.25rem; letter-spacing: -0.01em; }
+  .month-group { margin-bottom: 1.5rem; }
+  .month-title { font-size: 1rem; font-weight: 600; color: var(--warm-700); margin-bottom: 0.75rem; padding-left: 0.5rem; border-left: 3px solid var(--coral-300); }
+  .archive-list { list-style: none; padding: 0; }
+  .archive-item { display: flex; align-items: baseline; gap: 1.25rem; padding: 0.875rem 0; border-bottom: 1px solid var(--cream-300); }
+  .archive-item:last-child { border-bottom: none; }
+  .archive-date { font-size: 0.8125rem; color: var(--warm-400); min-width: 120px; flex-shrink: 0; }
+  .archive-title { font-size: 1rem; color: var(--warm-700); transition: color 0.2s ease; }
+  .archive-title:hover { color: var(--terracotta); }
+  @media (max-width: 768px) {
+    main { padding: 0 1.25rem 3rem; }
+    .archive-item { flex-direction: column; gap: 0.25rem; }
+    .archive-date { min-width: auto; }
+  }
+</style>
