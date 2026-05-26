@@ -23,13 +23,35 @@
 
 ```
 src/
-├── components/     # 页面组件（导航、页脚、目录等）
+├── components/             # 可复用 UI 组件
+│   ├── Comments.astro      #   文章评论区
+│   ├── Footer.astro        #   页脚
+│   ├── Nav.astro           #   导航栏
+│   └── TableOfContents.astro  # 文章目录导航
 ├── content/
-│   └── posts/      # 博客文章（Markdown）
-├── layouts/        # 页面布局模板
-├── lib/            # 工具函数
-├── pages/          # 路由页面
-└── styles/         # 全局样式
+│   └── posts/              # 博客文章（Markdown，33 篇）
+├── layouts/
+│   └── Layout.astro        # 全局页面布局
+├── lib/
+│   └── utils.ts            # 工具函数（文章排序、日期格式化等）
+├── pages/                  # 路由页面
+│   ├── index.astro         #   首页
+│   ├── about.astro         #   关于页
+│   ├── archives.astro      #   归档页
+│   ├── search.astro        #   搜索页
+│   ├── rss.xml.ts          #   RSS 订阅源
+│   ├── search.json.ts      #   搜索索引数据
+│   ├── posts/
+│   │   ├── index.astro     #   文章列表
+│   │   ├── [slug].astro    #   文章详情
+│   │   └── [page].astro    #   文章分页
+│   └── tags/
+│       ├── index.astro     #   标签列表
+│       └── [tag].astro     #   标签筛选页
+├── styles/
+│   └── global.css          # 全局样式
+├── assets/                 # 静态资源（SVG 等）
+└── content.config.ts       # 内容集合定义与 schema 校验
 ```
 
 ## 本地开发
