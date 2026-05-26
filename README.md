@@ -1,46 +1,66 @@
-# Astro Starter Kit: Basics
+# My Blog
 
-```sh
-npm create astro@latest -- --template basics
+基于 [Astro](https://astro.build) 构建的个人博客，托管于 [wangyunqing.top](https://www.wangyunqing.top)。
+
+## 功能
+
+- 文章列表与归档
+- 分类与标签系统
+- 全文搜索（基于 Fuse.js）
+- RSS 订阅
+- Sitemap 站点地图
+- 目录导航（Table of Contents）
+- 响应式设计
+
+## 技术栈
+
+- **框架**: Astro 6
+- **搜索**: Fuse.js
+- **RSS**: @astrojs/rss
+- **部署**: 静态站点生成（SSG）
+
+## 项目结构
+
+```
+src/
+├── components/     # 页面组件（导航、页脚、目录等）
+├── content/
+│   └── posts/      # 博客文章（Markdown）
+├── layouts/        # 页面布局模板
+├── lib/            # 工具函数
+├── pages/          # 路由页面
+└── styles/         # 全局样式
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 本地开发
 
-## 🚀 Project Structure
+```bash
+# 安装依赖
+npm install
 
-Inside of your Astro project, you'll see the following folders and files:
+# 启动开发服务器（localhost:4321）
+npm run dev
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+# 构建生产版本
+npm run build
+
+# 本地预览构建结果
+npm run preview
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 写作
 
-## 🧞 Commands
+在 `src/content/posts/` 目录下创建 `.md` 文件，添加 frontmatter：
 
-All commands are run from the root of the project, from a terminal:
+```yaml
+---
+title: 文章标题
+date: 2026-01-01
+categories: [分类]
+tags: [标签1, 标签2]
+---
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## License
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
