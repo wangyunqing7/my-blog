@@ -56,6 +56,11 @@ const readingTime = getReadingTime(post.body || '');
   </main>
 </Layout>
 
+<script>
+  window.scrollTo(0, 0);
+  document.addEventListener('astro:page-load', () => window.scrollTo(0, 0));
+</script>
+
 <style>
   main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
   .article { padding-top: 1rem; }
