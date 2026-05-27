@@ -47,7 +47,7 @@ const totalCount = tagPosts.length + tagPhotos.length;
         <h2 class="section-label">作品集</h2>
         <div class="photo-list">
           {tagPhotos.map((photo) => (
-            <a href={`/gallery`} class="photo-item">
+            <a href={`/gallery/${photo.id}`} class="photo-item">
               <img src={photo.data.images[0]} alt={photo.data.title} />
               <div class="photo-item-info">
                 <span class="photo-item-title">{photo.data.title}</span>

@@ -14,7 +14,7 @@ interface ArchiveItem {
 
 const allItems: ArchiveItem[] = [
   ...posts.map((p) => ({ title: p.data.title, href: `/posts/${p.id}`, date: p.data.date, type: 'post' as const })),
-  ...photos.map((p) => ({ title: p.data.title, href: '/gallery', date: p.data.date, type: 'gallery' as const })),
+  ...photos.map((p) => ({ title: p.data.title, href: `/gallery/${p.id}`, date: p.data.date, type: 'gallery' as const })),
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
 interface MonthGroup { month: string; items: ArchiveItem[]; }

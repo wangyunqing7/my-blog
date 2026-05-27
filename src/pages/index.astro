@@ -58,7 +58,7 @@ const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length >
               <span class="preview-title">{latestPhoto.data.title}</span>
               {latestPhoto.data.location && <span class="preview-location">{latestPhoto.data.location}</span>}
             </div>
-            <a href="/gallery" class="preview-link">查看作品集 &rarr;</a>
+            <a href={`/gallery/${latestPhoto.id}`} class="preview-link">查看作品集 &rarr;</a>
           </div>
         )}
       </div>

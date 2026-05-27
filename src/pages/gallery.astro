@@ -17,7 +17,7 @@ const photos = await getSortedPhotos();
         const images = photo.data.images;
         const hasMultiple = images.length > 1;
         return (
-          <div class="photo-card" data-title={photo.data.title}>
+          <a href={`/gallery/${photo.id}`} class="photo-card" data-title={photo.data.title}>
             {hasMultiple ? (
               <div class="photo-slider">
                 {images.map((img, i) => (
@@ -54,7 +54,7 @@ const photos = await getSortedPhotos();
                 </div>
               )}
             </div>
-          </div>
+          </a>
         );
       })}
     </div>

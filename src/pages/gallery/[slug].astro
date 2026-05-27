@@ -1,0 +1,220 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const photos = await getCollection('gallery');
+  return photos.map((photo) => ({
+    params: { slug: photo.id },
+    props: { photo },
+  }));
+}
+
+const { photo } = Astro.props;
+const images = photo.data.images;
+---
+
+<Layout title={`${photo.data.title} - Yunqing's Blog`} description={photo.data.description || ''} active="gallery">
+  <main>
+    <article class="gallery-detail">
+      <header class="detail-header">
+        <div class="detail-meta">
+          <time>{formatDate(photo.data.date)}</time>
+          {photo.data.location && (
+            <>
+              <span class="dot">&middot;</span>
+              <span>{photo.data.location}</span>
+            </>
+          )}
+          <span class="dot">&middot;</span>
+          <span>{images.length} 张照片</span>
+        </div>
+        <h1 class="detail-title">{photo.data.title}</h1>
+        {photo.data.description && <p class="detail-desc">{photo.data.description}</p>}
+        <div class="detail-tags">
+          {photo.data.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="tag">{tag}</a>
+          ))}
+        </div>
+      </header>
+
+      <div class="photo-grid">
+        {images.map((img, i) => (
+          <div class="photo-cell" data-index={i}>
+            <img src={img} alt={`${photo.data.title} ${i + 1}`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+
+      <footer class="detail-footer">
+        <a href="/gallery" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          返回作品集
+        </a>
+      </footer>
+    </article>
+  </main>
+</Layout>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="关闭">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <button class="lightbox-arrow lb-prev" id="lb-prev" aria-label="上一张">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <img class="lightbox-img" id="lightbox-img" alt="" />
+  <button class="lightbox-arrow lb-next" id="lb-next" aria-label="下一张">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="lightbox-footer">
+    <p class="lightbox-title" id="lightbox-title"></p>
+    <span class="lightbox-counter" id="lightbox-counter"></span>
+  </div>
+</div>
+
+<style>
+  main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
+
+  .detail-header { margin-bottom: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--cream-300); }
+  .detail-meta { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--warm-400); margin-bottom: 1.25rem; }
+  .dot { color: var(--warm-300); }
+  .detail-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--warm-900);
+    margin-bottom: 0.75rem;
+  }
+  .detail-desc { font-size: 1.0625rem; line-height: 1.7; color: var(--warm-500); margin-bottom: 1.25rem; }
+  .detail-tags { display: flex; gap: 0.5rem; }
+  .tag { font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; transition: all 0.2s ease; }
+  .tag:hover { background: var(--terracotta); color: white; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .photo-cell {
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+  }
+  .photo-cell:hover { transform: scale(1.01); }
+  .photo-cell img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .detail-footer { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--cream-300); }
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--warm-500); transition: color 0.2s ease; }
+  .back-link:hover { color: var(--terracotta); }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.92);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+    z-index: 1;
+  }
+  .lightbox-close:hover { color: white; }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 0.75rem;
+    transition: color 0.2s ease;
+  }
+  .lightbox-arrow:hover { color: white; }
+  .lb-prev { left: 1rem; }
+  .lb-next { right: 1rem; }
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .lightbox-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .lightbox-title { font-family: var(--font-serif); font-size: 1.125rem; color: rgba(255, 255, 255, 0.85); }
+  .lightbox-counter { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.5); }
+
+  @media (max-width: 768px) {
+    main { padding: 0 1.25rem 3rem; }
+    .photo-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const lightbox = document.getElementById('lightbox')!;
+  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lbTitle = document.getElementById('lightbox-title')!;
+  const lbCounter = document.getElementById('lightbox-counter')!;
+  const cells = document.querySelectorAll('.photo-cell');
+  let images: string[] = [];
+  let idx = 0;
+
+  const show = (i: number) => {
+    idx = i;
+    lbImg.src = images[i];
+    lbCounter.textContent = images.length > 1 ? `${i + 1} / ${images.length}` : '';
+  };
+
+  cells.forEach((cell) => {
+    images.push((cell.querySelector('img') as HTMLImageElement).src);
+    cell.addEventListener('click', () => {
+      lbTitle.textContent = document.querySelector('.detail-title')?.textContent || '';
+      show(Number((cell as HTMLElement).dataset.index));
+      lightbox.classList.add('active');
+    });
+  });
+
+  document.getElementById('lb-prev')!.addEventListener('click', () => show((idx - 1 + images.length) % images.length));
+  document.getElementById('lb-next')!.addEventListener('click', () => show((idx + 1) % images.length));
+
+  const close = () => lightbox.classList.remove('active');
+  document.getElementById('lightbox-close')!.addEventListener('click', close);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show((idx - 1 + images.length) % images.length);
+    if (e.key === 'ArrowRight') show((idx + 1) % images.length);
+  });
+</script>
