@@ -92,7 +92,7 @@ import Layout from '../layouts/Layout.astro';
     results.innerHTML = matches.map((m: any) => `
       <div class="result-card">
         <div class="result-type">${m.item.type === 'gallery' ? '作品集' : '文章'}</div>
-        <h3 class="result-title"><a href="${m.item.type === 'gallery' ? `/${escapeHtml(m.item.slug)}` : `/posts/${escapeHtml(m.item.slug)}`}">${escapeHtml(m.item.title)}</a></h3>
+        <h3 class="result-title"><a href="${m.item.type === 'gallery' ? escapeHtml(m.item.slug) : `/posts/${escapeHtml(m.item.slug)}`}">${escapeHtml(m.item.title)}</a></h3>
         <p class="result-desc">${escapeHtml(m.item.description)}</p>
         <div class="result-tags">
           ${m.item.tags.map((t: string) => `<span class="result-tag">${escapeHtml(t)}</span>`).join('')}

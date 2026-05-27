@@ -17,7 +17,7 @@ export const GET: APIRoute = async () => {
   const galleryIndex = gallery.map((photo) => ({
     title: photo.data.title,
     description: photo.data.description || '',
-    slug: `gallery/${photo.id}`,
+    slug: '/gallery',
     tags: photo.data.tags,
     date: photo.data.date.toISOString().split('T')[0],
     type: 'gallery',
