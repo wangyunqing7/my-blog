@@ -20,15 +20,12 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="about-section">
-        <h2 class="section-heading">技术栈</h2>
-        <div class="tech-grid">
-          <div class="tech-item"><span class="tech-name">TypeScript</span><span class="tech-desc">日常主力语言</span></div>
-          <div class="tech-item"><span class="tech-name">React / Vue</span><span class="tech-desc">前端框架</span></div>
-          <div class="tech-item"><span class="tech-name">Node.js</span><span class="tech-desc">服务端开发</span></div>
-          <div class="tech-item"><span class="tech-name">Astro</span><span class="tech-desc">本站构建工具</span></div>
-          <div class="tech-item"><span class="tech-name">Python</span><span class="tech-desc">数据分析与脚本</span></div>
-          <div class="tech-item"><span class="tech-name">Figma</span><span class="tech-desc">界面设计</span></div>
-        </div>
+        <h2 class="section-heading">技能栈</h2>
+        <ul class="tech-list">
+          <li class="tech-item"><span class="tech-name">编程语言：</span><span class="tech-desc">Python, C++, TypeScript</span></li>
+          <li class="tech-item"><span class="tech-name">工具：</span><span class="tech-desc">Git, VS Code, Claude Code, Codex</span></li>
+          <li class="tech-item"><span class="tech-name">AI 工具：</span><span class="tech-desc">GPT, GLM</span></li>
+        </ul>
       </div>
 
       <div class="about-section">
@@ -65,16 +62,15 @@ import Layout from '../layouts/Layout.astro';
   .section-heading { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--warm-900); margin-bottom: 1rem; letter-spacing: -0.01em; }
   .about-section p { font-size: 1rem; line-height: 1.85; color: var(--warm-700); margin-bottom: 1rem; }
   .about-section p:last-child { margin-bottom: 0; }
-  .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .tech-item { background: var(--cream-100); padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid var(--cream-300); }
-  .tech-name { display: block; font-size: 0.9375rem; font-weight: 600; color: var(--warm-900); margin-bottom: 0.25rem; }
-  .tech-desc { font-size: 0.8125rem; color: var(--warm-400); }
+  .tech-list { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; padding: 0; }
+  .tech-item { background: var(--cream-100); padding: 1rem 1.25rem; border-radius: 8px; border: 1px solid var(--cream-300); }
+  .tech-name { font-size: 0.9375rem; font-weight: 600; color: var(--warm-900); }
+  .tech-desc { font-size: 0.9375rem; color: var(--warm-700); }
   .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
   .contact-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; background: var(--cream-100); border: 1px solid var(--cream-300); border-radius: 100px; font-size: 0.875rem; font-weight: 500; color: var(--warm-700); transition: all 0.2s ease; }
   .contact-item:hover { background: var(--warm-900); border-color: var(--warm-900); color: var(--cream-50); }
   @media (max-width: 768px) {
     main { padding: 0 1.25rem 3rem; }
-    .tech-grid { grid-template-columns: 1fr; }
     .contact-links { flex-direction: column; }
     .contact-item { justify-content: center; }
   }
