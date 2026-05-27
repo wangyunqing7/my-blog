@@ -6,10 +6,13 @@
 
 - 文章列表与归档
 - 分类与标签系统
+- 作品集（多图展示、详情页）
 - 全文搜索（基于 Fuse.js）
 - RSS 订阅
 - Sitemap 站点地图
 - 目录导航（Table of Contents）
+- 深色/浅色主题切换
+- 移动端抽屉导航（768px 断点）
 - 响应式设计
 
 ## 技术栈
@@ -39,15 +42,18 @@ src/
 │   ├── about.astro         #   关于页
 │   ├── archives.astro      #   归档页
 │   ├── search.astro        #   搜索页
+│   ├── gallery.astro       #   作品集列表
 │   ├── rss.xml.ts          #   RSS 订阅源
 │   ├── search.json.ts      #   搜索索引数据
 │   ├── posts/
 │   │   ├── index.astro     #   文章列表
 │   │   ├── [slug].astro    #   文章详情
 │   │   └── [page].astro    #   文章分页
-│   └── tags/
-│       ├── index.astro     #   标签列表
-│       └── [tag].astro     #   标签筛选页
+│   ├── tags/
+│   │   ├── index.astro     #   标签列表
+│   │   └── [tag].astro     #   标签筛选页
+│   └── gallery/
+│       └── [slug].astro    #   作品集详情页
 ├── styles/
 │   └── global.css          # 全局样式
 ├── assets/                 # 静态资源（SVG 等）
