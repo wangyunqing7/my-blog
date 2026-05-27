@@ -29,3 +29,8 @@ export async function getAllTags(): Promise<Map<string, number>> {
   }
   return tagMap;
 }
+
+export async function getSortedPhotos() {
+  const photos = await getCollection('gallery');
+  return photos.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}

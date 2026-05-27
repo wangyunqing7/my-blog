@@ -1,26 +1,66 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSortedPosts, formatDate } from '../lib/utils';
+import { getSortedPosts, formatDate, getSortedPhotos } from '../lib/utils';
 
 const recentPosts = (await getSortedPosts()).slice(0, 3);
+const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length > 0);
 ---
 
 <Layout>
   <main>
     <section class="hero">
       <div class="hero-glow"></div>
-      <p class="hero-eyebrow">欢迎来到我的小角落</p>
-      <h1 class="hero-title">
-        用文字记录<br />
-        <span class="highlight">思考与创造</span>
-      </h1>
-      <p class="hero-desc">
-        关于编程、设计与生活的碎片思考。<br />
-        偶尔更新，始终真诚。
-      </p>
-      <div class="hero-actions">
-        <a href="/posts" class="btn-primary">开始阅读</a>
-        <a href="/about" class="btn-ghost">了解更多</a>
+      <div class="hero-body">
+        <div class="hero-text">
+          <p class="hero-eyebrow">欢迎来到我的小角落</p>
+          <h1 class="hero-title">
+            用文字记录<br />
+            <span class="highlight">思考与创造</span>
+          </h1>
+          <p class="hero-desc">
+            关于编程、设计与生活的碎片思考。<br />
+            偶尔更新，始终真诚。
+          </p>
+          <div class="hero-actions">
+            <a href="/posts" class="btn-primary">开始阅读</a>
+            <a href="/about" class="btn-ghost">了解更多</a>
+          </div>
+        </div>
+        {latestPhoto && (
+          <div class="hero-preview" id="hero-preview">
+            <div class="preview-header">
+              <span class="preview-label-text">最新作品</span>
+              {latestPhoto.data.images.length > 1 && (
+                <span class="preview-counter" id="preview-counter">1 / {latestPhoto.data.images.length}</span>
+              )}
+            </div>
+            <div class="preview-slider" id="preview-slider">
+              {latestPhoto.data.images.map((img, i) => (
+                <img src={img} alt={`${latestPhoto.data.title} ${i + 1}`} data-active={i === 0 ? 'true' : 'false'} />
+              ))}
+            </div>
+            {latestPhoto.data.images.length > 1 && (
+              <div class="preview-controls">
+                <button class="preview-btn" id="preview-prev" aria-label="上一张">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="preview-dots" id="preview-dots">
+                  {latestPhoto.data.images.map((_, i) => (
+                    <span class={`dot ${i === 0 ? 'active' : ''}`} />
+                  ))}
+                </div>
+                <button class="preview-btn" id="preview-next" aria-label="下一张">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            )}
+            <div class="preview-footer">
+              <span class="preview-title">{latestPhoto.data.title}</span>
+              {latestPhoto.data.location && <span class="preview-location">{latestPhoto.data.location}</span>}
+            </div>
+            <a href="/gallery" class="preview-link">查看作品集 &rarr;</a>
+          </div>
+        )}
       </div>
     </section>
 
@@ -57,6 +97,105 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
     padding: 6rem 1.5rem 5rem;
     overflow: hidden;
   }
+  .hero-body {
+    display: flex;
+    align-items: flex-end;
+    gap: 3rem;
+  }
+  .hero-text { flex: 1; min-width: 0; }
+  .hero-preview {
+    width: 280px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--cream-100);
+    border: 1px solid var(--cream-300);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hero-preview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(45, 42, 38, 0.1);
+  }
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1rem 0;
+  }
+  .preview-label-text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--coral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .preview-counter {
+    font-size: 0.625rem;
+    color: var(--warm-400);
+  }
+  .preview-slider {
+    position: relative;
+    padding: 0.625rem 0.75rem;
+  }
+  .preview-slider img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    display: none;
+  }
+  .preview-slider img[data-active='true'] { display: block; }
+  .preview-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.25rem 0;
+  }
+  .preview-btn {
+    background: none;
+    border: none;
+    color: var(--warm-400);
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    transition: color 0.2s ease;
+  }
+  .preview-btn:hover { color: var(--warm-900); }
+  .preview-dots { display: flex; gap: 0.25rem; }
+  .preview-dots .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--warm-300);
+    transition: background 0.2s ease;
+  }
+  .preview-dots .dot.active { background: var(--terracotta); }
+  .preview-footer {
+    padding: 0.5rem 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .preview-title {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--warm-900);
+  }
+  .preview-location {
+    font-size: 0.6875rem;
+    color: var(--warm-400);
+  }
+  .preview-link {
+    display: block;
+    padding: 0.625rem 1rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--coral-500);
+    transition: color 0.2s ease;
+  }
+  .preview-link:hover { color: var(--terracotta); }
   .hero-glow {
     position: absolute;
     top: -40%;
@@ -162,6 +301,8 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
   .cta-text { font-family: var(--font-serif); font-size: 1.25rem; color: var(--warm-700); margin-bottom: 1.25rem; }
   @media (max-width: 768px) {
     .hero { padding: 3.5rem 1.25rem 3rem; }
+    .hero-body { flex-direction: column; align-items: stretch; gap: 2rem; }
+    .hero-preview { width: 100%; max-width: 280px; align-self: center; }
     .hero-title { font-size: clamp(2rem, 8vw, 2.75rem); }
     .recent, .cta { padding-left: 1.25rem; padding-right: 1.25rem; }
     .cta-inner { padding: 2rem 1.5rem; }
@@ -174,3 +315,27 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
     .recent, .cta { padding-left: 1rem; padding-right: 1rem; }
   }
 </style>
+
+<script>
+  const slider = document.getElementById('preview-slider');
+  if (slider) {
+    const imgs = slider.querySelectorAll('img');
+    const counter = document.getElementById('preview-counter');
+    const dots = document.querySelectorAll('#preview-dots .dot');
+    let current = 0;
+
+    const update = (idx: number) => {
+      current = idx;
+      imgs.forEach((img, i) => ((img as HTMLElement).dataset.active = String(i === idx)));
+      if (counter) counter.textContent = `${idx + 1} / ${imgs.length}`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    };
+
+    document.getElementById('preview-prev')?.addEventListener('click', () =>
+      update((current - 1 + imgs.length) % imgs.length)
+    );
+    document.getElementById('preview-next')?.addEventListener('click', () =>
+      update((current + 1) % imgs.length)
+    );
+  }
+</script>
