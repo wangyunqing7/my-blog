@@ -29,10 +29,11 @@ const tocItems = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 <style>
   .toc {
     position: fixed;
-    top: 6rem;
-    right: 2rem;
+    top: 50%;
+    left: calc((100vw - var(--max-width)) / 2 - 220px);
+    transform: translateY(-50%);
     width: 180px;
-    max-height: calc(100vh - 8rem);
+    max-height: min(70vh, calc(100vh - 6rem));
     overflow-y: auto;
     scrollbar-width: thin;
   }
@@ -51,7 +52,7 @@ const tocItems = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
   .toc-item a:hover { color: var(--terracotta); }
   .toc-depth-3 { padding-left: 1rem; }
   .toc-active a { color: var(--terracotta); font-weight: 500; }
-  @media (max-width: 1200px) { .toc { display: none; } }
+  @media (max-width: 1400px) { .toc { display: none; } }
 </style>
 
 <script>
