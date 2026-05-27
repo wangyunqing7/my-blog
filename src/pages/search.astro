@@ -46,8 +46,9 @@ import Layout from '../layouts/Layout.astro';
   :global(.result-title a) { color: var(--warm-900); transition: color 0.2s ease; }
   :global(.result-title a:hover) { color: var(--terracotta); }
   :global(.result-desc) { font-size: 0.9375rem; color: var(--warm-500); line-height: 1.6; margin-bottom: 0.5rem; }
-  :global(.result-tags) { display: flex; gap: 0.5rem; }
-  :global(.result-tag) { font-size: 0.75rem; color: var(--warm-700); background: var(--cream-200); padding: 0.2rem 0.6rem; border-radius: 100px; }
+  :global(.result-tags) { display: flex; gap: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  :global(.result-tags::-webkit-scrollbar) { display: none; }
+  :global(.result-tag) { flex-shrink: 0; font-size: 0.75rem; color: var(--warm-700); background: var(--cream-200); padding: 0.2rem 0.6rem; border-radius: 100px; white-space: nowrap; }
   :global(.no-results) { text-align: center; padding: 3rem 0; color: var(--warm-400); font-size: 0.9375rem; }
   @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } }
 </style>
@@ -71,7 +72,7 @@ import Layout from '../layouts/Layout.astro';
     const data = await res.json();
     fuse = new Fuse(data, {
       keys: ['title', 'description', 'tags'],
-      threshold: 0.4,
+      threshold: 0.3,
       includeScore: true,
     });
   }
