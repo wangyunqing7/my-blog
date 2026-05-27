@@ -1,16 +1,30 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getAllTags } from '../../lib/utils';
+import { getSortedPosts, getSortedPhotos } from '../../lib/utils';
 
-const tagMap = await getAllTags();
+const posts = await getSortedPosts();
+const photos = await getSortedPhotos();
+
+const tagMap = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
+  }
+}
+for (const photo of photos) {
+  for (const tag of photo.data.tags) {
+    tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
+  }
+}
+
 const sortedTags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
-<Layout title="标签 - Yunqing's Blog" description="按标签浏览文章。" active="tags">
+<Layout title="标签 - Yunqing's Blog" description="按标签浏览文章与作品。" active="tags">
   <main>
     <section class="page-header">
       <h1 class="page-title">标签</h1>
-      <p class="page-desc">按主题浏览所有文章</p>
+      <p class="page-desc">按主题浏览所有文章与作品</p>
     </section>
     <section class="tag-cloud">
       {sortedTags.map(([tag, count]) => (

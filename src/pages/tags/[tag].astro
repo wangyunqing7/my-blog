@@ -1,26 +1,37 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getSortedPosts, formatDate, getReadingTime } from '../../lib/utils';
+import { getSortedPosts, getSortedPhotos, formatDate, getReadingTime } from '../../lib/utils';
 
 export async function getStaticPaths() {
   const posts = await getSortedPosts();
-  const tags = new Map<string, typeof posts>();
+  const photos = await getSortedPhotos();
+
+  const tagItems = new Map<string, { posts: typeof posts; photos: typeof photos }>();
+
   for (const post of posts) {
     for (const tag of post.data.tags) {
-      if (!tags.has(tag)) tags.set(tag, []);
-      tags.get(tag)!.push(post);
+      if (!tagItems.has(tag)) tagItems.set(tag, { posts: [], photos: [] });
+      tagItems.get(tag)!.posts.push(post);
     }
   }
-  return [...tags.entries()].map(([tag, tagPosts]) => ({
+  for (const photo of photos) {
+    for (const tag of photo.data.tags) {
+      if (!tagItems.has(tag)) tagItems.set(tag, { posts: [], photos: [] });
+      tagItems.get(tag)!.photos.push(photo);
+    }
+  }
+
+  return [...tagItems.entries()].map(([tag, items]) => ({
     params: { tag },
-    props: { tag, posts: tagPosts },
+    props: { tag, ...items },
   }));
 }
 
-const { tag, posts: tagPosts } = Astro.props;
+const { tag, posts: tagPosts, photos: tagPhotos } = Astro.props;
+const totalCount = tagPosts.length + tagPhotos.length;
 ---
 
-<Layout title={`标签: ${tag} - Yunqing's Blog`} description={`标签「${tag}」下的所有文章。`} active="tags">
+<Layout title={`标签: ${tag} - Yunqing's Blog`} description={`标签「${tag}」下的所有文章与作品。`} active="tags">
   <main>
     <section class="page-header">
       <a href="/tags" class="back-link">
@@ -28,22 +39,45 @@ const { tag, posts: tagPosts } = Astro.props;
         全部标签
       </a>
       <h1 class="page-title">{tag}</h1>
-      <p class="page-desc">{tagPosts.length} 篇文章</p>
+      <p class="page-desc">{totalCount} 个内容</p>
     </section>
-    <section class="post-list">
-      {tagPosts.map((post) => (
-        <article class="post-card">
-          <a href={`/posts/${post.id}`} class="post-link">
-            <div class="post-meta">
-              <time class="post-date">{formatDate(post.data.date)}</time>
-              <span class="post-reading">{getReadingTime(post.body || '')} 分钟</span>
-            </div>
-            <h2 class="post-title">{post.data.title}</h2>
-            <p class="post-excerpt">{post.data.description}</p>
-          </a>
-        </article>
-      ))}
-    </section>
+
+    {tagPhotos.length > 0 && (
+      <section class="section-block">
+        <h2 class="section-label">作品集</h2>
+        <div class="photo-list">
+          {tagPhotos.map((photo) => (
+            <a href={`/gallery`} class="photo-item">
+              <img src={photo.data.images[0]} alt={photo.data.title} />
+              <div class="photo-item-info">
+                <span class="photo-item-title">{photo.data.title}</span>
+                <span class="photo-item-date">{formatDate(photo.data.date)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {tagPosts.length > 0 && (
+      <section class="section-block">
+        <h2 class="section-label">文章</h2>
+        <div class="post-list">
+          {tagPosts.map((post) => (
+            <article class="post-card">
+              <a href={`/posts/${post.id}`} class="post-link">
+                <div class="post-meta">
+                  <time class="post-date">{formatDate(post.data.date)}</time>
+                  <span class="post-reading">{getReadingTime(post.body || '')} 分钟</span>
+                </div>
+                <h3 class="post-title">{post.data.title}</h3>
+                <p class="post-excerpt">{post.data.description}</p>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
   </main>
 </Layout>
 
@@ -54,6 +88,34 @@ const { tag, posts: tagPosts } = Astro.props;
   .back-link:hover { color: var(--terracotta); }
   .page-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 500; color: var(--warm-900); letter-spacing: -0.02em; margin-bottom: 0.5rem; }
   .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
+
+  .section-block { margin-bottom: 2.5rem; }
+  .section-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--coral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .photo-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .photo-item {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--cream-100);
+    border: 1px solid var(--cream-300);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .photo-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(45, 42, 38, 0.08);
+  }
+  .photo-item img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .photo-item-info { padding: 0.75rem; }
+  .photo-item-title { font-family: var(--font-serif); font-size: 0.875rem; font-weight: 500; color: var(--warm-900); display: block; }
+  .photo-item-date { font-size: 0.6875rem; color: var(--warm-400); }
+
   .post-list { display: flex; flex-direction: column; }
   .post-card { border-bottom: 1px solid var(--cream-300); }
   .post-card:last-child { border-bottom: none; }
@@ -65,5 +127,10 @@ const { tag, posts: tagPosts } = Astro.props;
   .post-title { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 500; line-height: 1.4; color: var(--warm-900); letter-spacing: -0.01em; margin-bottom: 0.625rem; }
   .post-link:hover .post-title { color: var(--terracotta); }
   .post-excerpt { font-size: 0.9375rem; line-height: 1.7; color: var(--warm-500); max-width: 540px; }
-  @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } .post-link { padding: 1.5rem 0; } }
+
+  @media (max-width: 768px) {
+    main { padding: 0 1.25rem 3rem; }
+    .post-link { padding: 1.5rem 0; }
+    .photo-list { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  }
 </style>

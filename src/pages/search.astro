@@ -40,6 +40,7 @@ import Layout from '../layouts/Layout.astro';
   .search-hint { margin-top: 2rem; text-align: center; color: var(--warm-400); font-size: 0.9375rem; }
   .result-card { padding: 1.5rem 0; border-bottom: 1px solid var(--cream-300); }
   .result-card:last-child { border-bottom: none; }
+  .result-type { font-size: 0.6875rem; font-weight: 600; color: var(--coral-500); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.375rem; }
   .result-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--warm-900); margin-bottom: 0.5rem; }
   .result-title a { color: var(--warm-900); transition: color 0.2s ease; }
   .result-title a:hover { color: var(--terracotta); }
@@ -90,7 +91,8 @@ import Layout from '../layouts/Layout.astro';
     }
     results.innerHTML = matches.map((m: any) => `
       <div class="result-card">
-        <h3 class="result-title"><a href="/posts/${escapeHtml(m.item.slug)}">${escapeHtml(m.item.title)}</a></h3>
+        <div class="result-type">${m.item.type === 'gallery' ? '作品集' : '文章'}</div>
+        <h3 class="result-title"><a href="${m.item.type === 'gallery' ? `/${escapeHtml(m.item.slug)}` : `/posts/${escapeHtml(m.item.slug)}`}">${escapeHtml(m.item.title)}</a></h3>
         <p class="result-desc">${escapeHtml(m.item.description)}</p>
         <div class="result-tags">
           ${m.item.tags.map((t: string) => `<span class="result-tag">${escapeHtml(t)}</span>`).join('')}
