@@ -18,6 +18,8 @@ const navItems = [
 
 <nav>
   <a href="/" class="logo"><img src="/logo.png" alt="Yunqing" /><span>Yunqing</span></a>
+
+  <!-- 桌面端导航 -->
   <div class="nav-links">
     {navItems.map((item) => (
       <a href={item.href} class:list={[active === item.name && 'active']}>
@@ -34,6 +36,49 @@ const navItems = [
       </svg>
     </button>
   </div>
+
+  <!-- 移动端顶栏按钮 -->
+  <div class="mobile-actions">
+    <button class="theme-toggle" id="theme-toggle-mobile" aria-label="切换主题">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="打开菜单">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- 遮罩 -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- 抽屉 -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <span></span>
+      <button class="drawer-close" id="drawer-close" aria-label="关闭菜单">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="6" y1="18" x2="18" y2="6"/>
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-nav">
+      {navItems.map((item) => (
+        <a href={item.href} class:list={['drawer-link', active === item.name && 'active']}>
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
 </nav>
 
 <style>
@@ -44,6 +89,7 @@ const navItems = [
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 1.75rem 1.5rem;
+    position: relative;
   }
 
   .logo {
@@ -53,7 +99,7 @@ const navItems = [
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--warm-900);
+    color: var(--warm-700);
     letter-spacing: -0.02em;
   }
 
@@ -64,6 +110,7 @@ const navItems = [
     object-fit: cover;
   }
 
+  /* 桌面端导航 */
   .nav-links {
     display: flex;
     align-items: center;
@@ -103,17 +150,202 @@ const navItems = [
   :global([data-theme="dark"]) .icon-moon { display: block; }
   :global([data-theme="dark"]) .icon-sun { display: none; }
 
-  @media (max-width: 480px) {
+  /* 移动端元素默认隐藏 */
+  .mobile-actions {
+    display: none;
+  }
+
+  .drawer-overlay {
+    display: none;
+  }
+
+  .drawer {
+    display: none;
+  }
+
+  /* 移动端抽屉 */
+  @media (max-width: 768px) {
     nav { padding: 1.25rem; }
-    .nav-links { gap: 1rem; }
-    .nav-links a { font-size: 0.8125rem; }
+
+    .nav-links { display: none; }
+
+    .mobile-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: var(--warm-500);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+
+    .hamburger:hover {
+      color: var(--warm-900);
+    }
+
+    /* 遮罩 */
+    .drawer-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 抽屉面板 */
+    .drawer {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 260px;
+      max-width: 80vw;
+      background: var(--cream-50);
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.25rem 1rem;
+      border-bottom: 1px solid var(--warm-200);
+    }
+
+    .drawer-header .logo {
+      font-size: 1.125rem;
+    }
+
+    .drawer-header .logo img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: var(--warm-500);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+
+    .drawer-close:hover {
+      color: var(--warm-900);
+    }
+
+    .drawer-nav {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0;
+      overflow-y: auto;
+    }
+
+    .drawer-link {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--warm-500);
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .drawer-link:hover {
+      color: var(--warm-900);
+      background: var(--warm-100);
+    }
+
+    .drawer-link.active {
+      color: var(--warm-900);
+      font-weight: 600;
+      background: var(--warm-100);
+    }
+  }
+
+  /* 深色主题抽屉 */
+  :global([data-theme="dark"]) .drawer {
+    background: var(--cream-50);
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.3);
+  }
+
+  :global([data-theme="dark"]) .drawer-header {
+    border-bottom-color: var(--warm-800);
+  }
+
+  :global([data-theme="dark"]) .drawer-link:hover,
+  :global([data-theme="dark"]) .drawer-link.active {
+    background: var(--warm-800);
   }
 </style>
 
 <script>
-  document.getElementById('theme-toggle')?.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  });
+  function setupDrawer() {
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const closeBtn = document.getElementById('drawer-close');
+
+    function openDrawer() {
+      drawer?.classList.add('open');
+      overlay?.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      drawer?.classList.remove('open');
+      overlay?.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger?.addEventListener('click', openDrawer);
+    closeBtn?.addEventListener('click', closeDrawer);
+    overlay?.addEventListener('click', closeDrawer);
+
+    // 点击导航项后自动关闭
+    drawer?.querySelectorAll('.drawer-link').forEach((link) => {
+      link.addEventListener('click', closeDrawer);
+    });
+  }
+
+  // 主题切换
+  function setupThemeToggle() {
+    const toggle = (id: string) => {
+      document.getElementById(id)?.addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    };
+    toggle('theme-toggle');
+    toggle('theme-toggle-mobile');
+  }
+
+  setupDrawer();
+  setupThemeToggle();
 </script>

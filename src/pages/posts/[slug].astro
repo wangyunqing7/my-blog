@@ -58,7 +58,13 @@ const readingTime = getReadingTime(post.body || '');
 
 <script>
   window.scrollTo(0, 0);
-  document.addEventListener('astro:page-load', () => window.scrollTo(0, 0));
+  document.addEventListener('astro:page-load', () => {
+    window.scrollTo(0, 0);
+    // 阻止标签横向滑动时触发页面滚动
+    document.querySelectorAll('.article-tags').forEach((el) => {
+      el.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: true });
+    });
+  });
 </script>
 
 <style>
@@ -76,8 +82,9 @@ const readingTime = getReadingTime(post.body || '');
     color: var(--warm-900);
     margin-bottom: 1.25rem;
   }
-  .article-tags { display: flex; gap: 0.5rem; }
-  .tag { font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; transition: all 0.2s ease; }
+  .article-tags { display: flex; gap: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .article-tags::-webkit-scrollbar { display: none; }
+  .tag { flex-shrink: 0; font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; white-space: nowrap; transition: all 0.2s ease; }
   .tag:hover { background: var(--terracotta); color: white; }
   .article-with-toc { display: flex; position: relative; }
   .article-content { flex: 1; min-width: 0; font-size: 1.0625rem; line-height: 1.85; color: var(--warm-700); }

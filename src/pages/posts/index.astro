@@ -72,8 +72,9 @@ const hasMore = allPosts.length > 10;
   }
   .post-link:hover .post-title { color: var(--terracotta); }
   .post-excerpt { font-size: 0.9375rem; line-height: 1.7; color: var(--warm-500); margin-bottom: 1rem; max-width: 540px; }
-  .post-tags { display: flex; gap: 0.5rem; }
-  .tag { font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; letter-spacing: 0.02em; }
+  .post-tags { display: flex; gap: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .post-tags::-webkit-scrollbar { display: none; }
+  .tag { flex-shrink: 0; font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; white-space: nowrap; letter-spacing: 0.02em; }
 
   .pagination {
     display: flex;
