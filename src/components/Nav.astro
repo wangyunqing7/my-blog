@@ -16,7 +16,7 @@ const navItems = [
 ---
 
 <nav>
-  <a href="/" class="logo">Yunqing</a>
+  <a href="/" class="logo"><img src="/logo.png" alt="Yunqing" /><span>Yunqing</span></a>
   <div class="nav-links">
     {navItems.map((item) => (
       <a href={item.href} class:list={[active === item.name && 'active']}>
@@ -46,11 +46,21 @@ const navItems = [
   }
 
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--warm-900);
     letter-spacing: -0.02em;
+  }
+
+  .logo img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .nav-links {
