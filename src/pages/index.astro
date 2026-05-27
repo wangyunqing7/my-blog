@@ -58,7 +58,7 @@ const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length >
               <span class="preview-title">{latestPhoto.data.title}</span>
               {latestPhoto.data.location && <span class="preview-location">{latestPhoto.data.location}</span>}
             </div>
-            <a href={`/gallery/${latestPhoto.id}`} class="preview-link">查看作品集 &rarr;</a>
+            <a href="/gallery" class="preview-link">查看作品集 &rarr;</a>
           </div>
         )}
       </div>
@@ -299,6 +299,13 @@ const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length >
   .cta { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
   .cta-inner { background: var(--cream-200); border-radius: 1.25rem; padding: 3rem; text-align: center; }
   .cta-text { font-family: var(--font-serif); font-size: 1.25rem; color: var(--warm-700); margin-bottom: 1.25rem; }
+  @media (min-width: 900px) {
+    .hero-preview { width: min(560px, 52vw); }
+    .preview-slider img {
+      aspect-ratio: auto;
+      height: 210px;
+    }
+  }
   @media (max-width: 768px) {
     .hero { padding: 3.5rem 1.25rem 3rem; }
     .hero-body { flex-direction: column; align-items: stretch; gap: 2rem; }
