@@ -12,51 +12,29 @@ const photos = await getSortedPhotos();
       <p class="page-desc">用镜头记录生活的瞬间</p>
     </section>
 
-    <div class="masonry">
-      {photos.map((photo) => {
-        const images = photo.data.images;
-        const hasMultiple = images.length > 1;
-        return (
-          <a href={`/gallery/${photo.id}`} class="photo-card" data-title={photo.data.title}>
-            {hasMultiple ? (
-              <div class="photo-slider">
-                {images.map((img, i) => (
-                  <div class="slide" data-active={i === 0 ? 'true' : 'false'}>
-                    <img src={img} alt={`${photo.data.title} ${i + 1}`} loading="lazy" />
-                  </div>
-                ))}
-                <div class="slider-nav">
-                  <button class="slider-btn slider-prev" aria-label="上一张">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
-                  <span class="slider-counter">1 / {images.length}</span>
-                  <button class="slider-btn slider-next" aria-label="下一张">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </button>
-                </div>
-              </div>
-            ) : images[0] ? (
-              <div class="photo-wrapper">
-                <img src={images[0]} alt={photo.data.title} loading="lazy" />
-              </div>
-            ) : null}
-            <div class="photo-info">
-              <h3 class="photo-title">{photo.data.title}</h3>
-              <div class="photo-meta">
-                {photo.data.location && <span class="photo-location">{photo.data.location}</span>}
-                <span class="photo-date">{formatDate(photo.data.date)}</span>
-              </div>
-              {photo.data.tags.length > 0 && (
-                <div class="photo-tags">
-                  {photo.data.tags.map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </div>
-              )}
+    <div class="grid">
+      {photos.map((photo) => (
+        <a href={`/gallery/${photo.id}`} class="card">
+          <div class="card-img">
+            <img src={photo.data.images[0]} alt={photo.data.title} loading="lazy" />
+            {photo.data.images.length > 1 && <span class="card-badge">{photo.data.images.length} 张</span>}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">{photo.data.title}</h3>
+            <div class="card-meta">
+              {photo.data.location && <span class="card-location">{photo.data.location}</span>}
+              <span class="card-date">{formatDate(photo.data.date)}</span>
             </div>
-          </a>
-        );
-      })}
+            {photo.data.tags.length > 0 && (
+              <div class="card-tags">
+                {photo.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      ))}
     </div>
 
     {photos.length === 0 && (
@@ -64,25 +42,6 @@ const photos = await getSortedPhotos();
     )}
   </main>
 </Layout>
-
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightbox-close" aria-label="关闭">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M18 6L6 18M6 6l12 12"/>
-    </svg>
-  </button>
-  <button class="lightbox-arrow lightbox-prev" id="lb-prev" aria-label="上一张">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <img class="lightbox-img" id="lightbox-img" alt="" />
-  <button class="lightbox-arrow lightbox-next" id="lb-next" aria-label="下一张">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <div class="lightbox-footer">
-    <p class="lightbox-title" id="lightbox-title"></p>
-    <span class="lightbox-counter" id="lightbox-counter"></span>
-  </div>
-</div>
 
 <style>
   main { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem 5rem; }
@@ -97,79 +56,67 @@ const photos = await getSortedPhotos();
   }
   .page-desc { font-size: 1.0625rem; color: var(--warm-500); line-height: 1.6; }
 
-  .masonry { columns: 3; column-gap: 1.25rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
 
-  .photo-card {
-    break-inside: avoid;
-    margin-bottom: 1.25rem;
-    border-radius: 12px;
+  .card {
+    border-radius: 14px;
     overflow: hidden;
     background: var(--cream-100);
+    border: 1px solid var(--cream-300);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
   }
-  .photo-card:hover {
+  .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(45, 42, 38, 0.1);
   }
 
-  .photo-wrapper { overflow: hidden; cursor: pointer; }
-  .photo-wrapper img {
+  .card-img {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-img img {
     width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     display: block;
     transition: transform 0.4s ease;
   }
-  .photo-card:hover .photo-wrapper img { transform: scale(1.03); }
-
-  /* Slider */
-  .photo-slider { position: relative; cursor: pointer; }
-  .slide { display: none; }
-  .slide[data-active='true'] { display: block; }
-  .slide img { width: 100%; display: block; }
-  .slider-nav {
+  .card:hover .card-img img { transform: scale(1.04); }
+  .card-badge {
     position: absolute;
-    bottom: 0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    top: 0.625rem;
+    right: 0.625rem;
     background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(8px);
-    padding: 0.375rem 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.1875rem 0.5rem;
     border-radius: 100px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
   }
-  .photo-card:hover .slider-nav { opacity: 1; }
-  .slider-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.8);
-    cursor: pointer;
-    padding: 0.125rem;
-    display: flex;
-    transition: color 0.2s ease;
-  }
-  .slider-btn:hover { color: white; }
-  .slider-counter { font-size: 0.6875rem; color: rgba(255, 255, 255, 0.8); }
 
-  .photo-info { padding: 1rem 1.125rem; }
-  .photo-title {
+  .card-body { padding: 1rem 1.125rem 1.25rem; }
+  .card-title {
     font-family: var(--font-serif);
-    font-size: 1rem;
+    font-size: 1.0625rem;
     font-weight: 500;
     color: var(--warm-900);
     margin-bottom: 0.375rem;
   }
-  .photo-meta {
+  .card-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     font-size: 0.75rem;
     color: var(--warm-400);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.625rem;
   }
-  .photo-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
+  .card-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
   .tag {
     font-size: 0.6875rem;
     font-weight: 500;
@@ -186,145 +133,13 @@ const photos = await getSortedPhotos();
     font-size: 0.9375rem;
   }
 
-  /* Lightbox */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.92);
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 2rem;
-  }
-  .lightbox.active { display: flex; }
-  .lightbox-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
-    z-index: 1;
-  }
-  .lightbox-close:hover { color: white; }
-  .lightbox-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    padding: 0.75rem;
-    transition: color 0.2s ease;
-  }
-  .lightbox-arrow:hover { color: white; }
-  .lightbox-prev { left: 1rem; }
-  .lightbox-next { right: 1rem; }
-  .lightbox-img {
-    max-width: 90vw;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-  .lightbox-footer {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  .lightbox-title {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.85);
-  }
-  .lightbox-counter { font-size: 0.8125rem; color: rgba(255, 255, 255, 0.5); }
-
   @media (max-width: 768px) {
-    .masonry { columns: 2; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     main { padding: 0 1.25rem 3rem; }
     .page-header { padding: 2rem 0 2.5rem; }
   }
   @media (max-width: 480px) {
-    .masonry { columns: 1; }
+    .grid { grid-template-columns: 1fr; }
     main { padding: 0 1rem 3rem; }
   }
 </style>
-
-<script>
-  // Card slider
-  document.querySelectorAll('.photo-slider').forEach((slider) => {
-    const slides = slider.querySelectorAll('.slide');
-    const counter = slider.querySelector('.slider-counter')!;
-    let current = 0;
-
-    const update = () => {
-      slides.forEach((s, i) => ((s as HTMLElement).dataset.active = String(i === current)));
-      counter.textContent = `${current + 1} / ${slides.length}`;
-    };
-
-    slider.querySelector('.slider-prev')!.addEventListener('click', (e) => {
-      e.stopPropagation();
-      current = (current - 1 + slides.length) % slides.length;
-      update();
-    });
-    slider.querySelector('.slider-next')!.addEventListener('click', (e) => {
-      e.stopPropagation();
-      current = (current + 1) % slides.length;
-      update();
-    });
-  });
-
-  // Lightbox
-  const lightbox = document.getElementById('lightbox')!;
-  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
-  const lbTitle = document.getElementById('lightbox-title')!;
-  const lbCounter = document.getElementById('lightbox-counter')!;
-  const lbPrev = document.getElementById('lb-prev')!;
-  const lbNext = document.getElementById('lb-next')!;
-  let allImages: string[] = [];
-  let lbIndex = 0;
-
-  const showLb = (idx: number) => {
-    lbIndex = idx;
-    lbImg.src = allImages[idx];
-    lbCounter.textContent = allImages.length > 1 ? `${idx + 1} / ${allImages.length}` : '';
-  };
-
-  document.querySelectorAll('.photo-card').forEach((card) => {
-    card.addEventListener('click', () => {
-      const el = card as HTMLElement;
-      const title = el.dataset.title || '';
-      lbTitle.textContent = title;
-      const slides = el.querySelectorAll('.slide img');
-      if (slides.length > 0) {
-        allImages = Array.from(slides).map((img: any) => img.src);
-      } else {
-        const single = el.querySelector('.photo-wrapper img') as HTMLImageElement | null;
-        allImages = single ? [single.src] : [];
-      }
-      if (allImages.length) {
-        showLb(0);
-        lightbox.classList.add('active');
-      }
-    });
-  });
-
-  lbPrev.addEventListener('click', () => { showLb((lbIndex - 1 + allImages.length) % allImages.length); });
-  lbNext.addEventListener('click', () => { showLb((lbIndex + 1) % allImages.length); });
-
-  const closeLb = () => lightbox.classList.remove('active');
-  document.getElementById('lightbox-close')!.addEventListener('click', closeLb);
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLb();
-    if (e.key === 'ArrowLeft') showLb((lbIndex - 1 + allImages.length) % allImages.length);
-    if (e.key === 'ArrowRight') showLb((lbIndex + 1) % allImages.length);
-  });
-</script>
