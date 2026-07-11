@@ -32,7 +32,7 @@ src/
 │   ├── Nav.astro           #   导航栏
 │   └── TableOfContents.astro  # 文章目录导航
 ├── content/
-│   └── posts/              # 博客文章（Markdown，33 篇）
+│   └── posts/              # 博客文章（Markdown，37 篇）
 ├── layouts/
 │   └── Layout.astro        # 全局页面布局
 ├── lib/

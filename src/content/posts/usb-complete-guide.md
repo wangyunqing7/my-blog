@@ -117,7 +117,7 @@ description: USB Type-C、USB 3.2、USB4、Thunderbolt... 这些名词让你头�
 - iPhone 15 起改用 Type-C
 
 ---
-![USB 接口类型对比](/static/images/usb-interfaces.png)
+![常见 USB 接口类型对比](/images/usb-interfaces.svg)
 ---
 
 ## 第二部分：传输协议 —— USB 跑多快？

@@ -5,7 +5,7 @@ import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getSortedPosts();
-  return paginate(posts, { pageSize: 10 });
+  return paginate(posts, { pageSize: 10 }).filter(({ params }) => params.page !== '1');
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
@@ -40,7 +40,7 @@ const { page } = Astro.props;
     {page.lastPage > 1 && (
       <nav class="pagination">
         {page.url.prev && (
-          <a href={page.url.prev} class="page-btn">上一页</a>
+          <a href={page.currentPage === 2 ? '/posts' : page.url.prev} class="page-btn">上一页</a>
         )}
         <span class="page-info">第 {page.currentPage} / {page.lastPage} 页</span>
         {page.url.next && (

@@ -66,7 +66,7 @@ author: "王云卿"
 > Qt 开发者中 Windows 用户占比较大，且 Qt 安装器在 Windows 上提供的编译器选择最复杂（MinGW、MSVC、LLVM-MinGW），所以先重点讲 Windows。但 Linux/macOS 开发者请放心，后面会补充。
 
 ---
-comments: true
+
 
 ### Windows 编译器：MinGW vs MSVC
 
@@ -139,7 +139,7 @@ Qt 6.8 开始：   仅支持 MSVC 2022（MSVC 2019 已淘汰）
 ```
 
 ---
-comments: true
+
 
 ### Linux/macOS 编译器
 
@@ -161,7 +161,7 @@ macOS 只有一种选择：clang (Apple)
 Apple 官方基于 LLVM 开发的 clang，是 macOS、iOS 开发唯一支持的编译器。
 
 ---
-comments: true
+
 
 ### 编译器选择矩阵（全平台对比）
 
@@ -193,7 +193,7 @@ Qt 自身的库
 谁来组织它们？→ 构建工具。
 
 ---
-comments: true
+
 
 ### 三大平台的构建工具
 
@@ -204,7 +204,7 @@ comments: true
 | **macOS** | CMake + Ninja | Xcode 项目也用 CMake |
 
 ---
-comments: true
+
 
 ### Qt6 重要变化：CMake 成为主角
 
@@ -235,7 +235,7 @@ comments: true
 > 安装 Qt 时会自动安装所需版本的 CMake 和 Ninja。
 
 ---
-comments: true
+
 
 ### Qt6 模块命名变化
 
@@ -247,7 +247,7 @@ Qt6: target_link_libraries(myapp Qt6::Core Qt6::Gui Qt6::Widgets)
 ```
 
 ---
-comments: true
+
 
 ### 怎么选？
 
@@ -272,7 +272,7 @@ comments: true
 - **看哪一行崩溃**：程序崩了告诉你原因
 
 ---
-comments: true
+
 
 ### 三大平台的调试器
 
@@ -295,7 +295,7 @@ comments: true
 > - MSVC 配套：使用 VS 调试器（体验最佳）
 
 ---
-comments: true
+
 
 ### LLDB：macOS 和跨平台调试器
 
@@ -318,7 +318,7 @@ comments: true
 **告诉编译器和链接器：Qt 的那些现成功能（按钮、窗口、网络、绘图）在哪。**
 
 ---
-comments: true
+
 
 ### Qt 自带一大堆现成功能
 
@@ -342,7 +342,7 @@ QOpenGL 3D 图形
 编译器必须知道：**这些库在哪** → 才能把它们链接进你的软件。
 
 ---
-comments: true
+
 
 ### 三大平台的库路径差异
 
@@ -386,7 +386,7 @@ Qt 安装目录/
 ```
 
 ---
-comments: true
+
 
 ### CMake 中如何指定库路径
 
@@ -404,7 +404,7 @@ target_link_libraries(myapp Qt6::Core Qt6::Widgets)
 - 链接选项（链接哪些 .so/.dll/.dylib）
 
 ---
-comments: true
+
 
 ### 跨平台注意事项
 
@@ -422,7 +422,7 @@ comments: true
 **你的软件要跑起来，必须依赖的一堆动态库文件。**
 
 ---
-comments: true
+
 
 ### 你写的代码只是逻辑
 
@@ -462,7 +462,7 @@ imageformats/...                     图像格式插件
 ```
 
 ---
-comments: true
+
 
 ### 为什么安装 Qt 要 5GB+？
 
@@ -476,7 +476,7 @@ comments: true
 - Qt Creator IDE
 
 ---
-comments: true
+
 
 ### 三大平台的运行时配置
 
@@ -696,7 +696,7 @@ macOS:   clang + CMake + .dylib/Framework
 理解了这 5 个组件和三大平台的差异，Qt 编译这块你就彻底通透了。
 
 ---
-comments: true
+
 
 ## 参考资料
 

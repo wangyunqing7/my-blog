@@ -2,7 +2,6 @@
 date: 2026-03-06
 draft: false
 title: Linux vs Windows：程序员该选哪个系统？
-cover: images/linux-vs-windows-cover.png
 tags:
   - Linux
   - Windows

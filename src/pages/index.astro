@@ -36,7 +36,14 @@ const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length >
             </div>
             <div class="preview-slider" id="preview-slider">
               {latestPhoto.data.images.map((img, i) => (
-                <img src={img} alt={`${latestPhoto.data.title} ${i + 1}`} data-active={i === 0 ? 'true' : 'false'} />
+                <img
+                  src={i === 0 ? img : undefined}
+                  data-src={i > 0 ? img : undefined}
+                  alt={`${latestPhoto.data.title} ${i + 1}`}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : 'low'}
+                  data-active={i === 0 ? 'true' : 'false'}
+                />
               ))}
             </div>
             {latestPhoto.data.images.length > 1 && (
@@ -333,6 +340,10 @@ const latestPhoto = (await getSortedPhotos()).find((p) => p.data.images.length >
 
     const update = (idx: number) => {
       current = idx;
+      const nextImage = imgs[idx] as HTMLImageElement;
+      if (!nextImage.src && nextImage.dataset.src) {
+        nextImage.src = nextImage.dataset.src;
+      }
       imgs.forEach((img, i) => ((img as HTMLElement).dataset.active = String(i === idx)));
       if (counter) counter.textContent = `${idx + 1} / ${imgs.length}`;
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));

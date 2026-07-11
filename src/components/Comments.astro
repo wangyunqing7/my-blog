@@ -39,7 +39,7 @@
 
     const observer = new MutationObserver(() => {
       const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      const iframe = document.querySelector('iframe.giscus-frame');
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
       if (iframe) {
         iframe.contentWindow?.postMessage({ giscus: { setConfig: { theme: newTheme } } }, 'https://giscus.app');
       }

@@ -3,7 +3,6 @@ comments: true
 date: 2026-01-07
 draft: false
 title: 「强化学习」到底是个啥？
-cover: images/reinforcement-learning-cover.png
 tags:
   - 强化学习
   - AI
@@ -180,7 +179,7 @@ GPT 生成文本 → Reward Model 打分 → PPO 更新参数 → 循环
 | **4** | RLHF 的本质是用 Reward Model 充当虚拟裁判，通过强化学习对齐人类意图 |
 
 ---
-comments: true
+
 
 ## 参考资料
 

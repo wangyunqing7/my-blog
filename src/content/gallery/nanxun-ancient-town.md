@@ -7,14 +7,14 @@ tags:
   - 古镇
   - 摄影
 images:
-  - /gallery/南浔古镇/IMG_20260404_093135.jpg
-  - /gallery/南浔古镇/IMG_20260404_093216.jpg
-  - /gallery/南浔古镇/IMG_20260404_093423.jpg
-  - /gallery/南浔古镇/IMG_20260404_100034.jpg
-  - /gallery/南浔古镇/IMG_20260404_101851.jpg
-  - /gallery/南浔古镇/IMG_20260404_102457.jpg
-  - /gallery/南浔古镇/IMG_20260404_103336.jpg
-  - /gallery/南浔古镇/IMG_20260404_111341.jpg
-  - /gallery/南浔古镇/IMG_20260404_111601.jpg
+  - /gallery-web/南浔古镇/IMG_20260404_093135.webp
+  - /gallery-web/南浔古镇/IMG_20260404_093216.webp
+  - /gallery-web/南浔古镇/IMG_20260404_093423.webp
+  - /gallery-web/南浔古镇/IMG_20260404_100034.webp
+  - /gallery-web/南浔古镇/IMG_20260404_101851.webp
+  - /gallery-web/南浔古镇/IMG_20260404_102457.webp
+  - /gallery-web/南浔古镇/IMG_20260404_103336.webp
+  - /gallery-web/南浔古镇/IMG_20260404_111341.webp
+  - /gallery-web/南浔古镇/IMG_20260404_111601.webp
 location: 浙江湖州
 ---

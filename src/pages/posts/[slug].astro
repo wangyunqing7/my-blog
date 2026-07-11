@@ -51,7 +51,7 @@ const readingTime = getReadingTime(post.body || '');
         </a>
       </footer>
 
-      <Comments />
+      {post.data.comments && <Comments />}
     </article>
   </main>
 </Layout>

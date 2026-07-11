@@ -28,7 +28,7 @@ author: "王云卿"
 今天，我想分享这套让我工作更舒服、学习更高效的方案——不是一篇教程，而是这套系统运行一年后的真实体验。
 
 ---
-comments: true
+
 
 ## 为什么是"台式机 + 笔记本"？
 
@@ -62,7 +62,7 @@ comments: true
 当我不再要求一台设备"什么都行"时，反而找到了真正舒服的使用方式。
 
 ---
-comments: true
+
 
 ## Windows + WSL2，为什么这么好用？
 
@@ -105,7 +105,7 @@ comments: true
 **我没有切换系统，只是在同一个系统里用了不同的工具。**
 
 ---
-comments: true
+
 
 ## 台式机 vs 笔记本，到底怎么分工？
 
@@ -186,7 +186,7 @@ swap=4GB
 - 不用重启，不用考虑虚拟机占用资源
 
 ---
-comments: true
+
 
 ## 那些踩过的坑
 
@@ -231,7 +231,7 @@ wsl --shutdown
 所有代码必须在 Git 仓库里，两台设备只通过 git 同步，绝不拷文件。虽然多了 push/pull 这一步，但避免了无数次"改错版本"的灾难。
 
 ---
-comments: true
+
 
 ## 这套方案适合谁？
 
@@ -252,7 +252,7 @@ comments: true
 一个简单的判断标准：**如果你的台式机有 30% 时间处于闲置状态，你可能不需要它。**
 
 ---
-comments: true
+
 
 ## 一些想说的话
 
@@ -279,7 +279,7 @@ comments: true
 但就当下，就 2026 年，**台式机 + 笔记本 + WSL2 依然是我能想到的最平衡方案。**
 
 ---
-comments: true
+
 
 ## 最后：一个简单的开始
 
@@ -296,7 +296,7 @@ comments: true
 不需要一步到位，慢慢来，找到最适合自己的节奏。
 
 ---
-comments: true
+
 
 ## 参考资料
 
@@ -307,6 +307,6 @@ comments: true
 - [Improving Dockerized Projects in WSL2](https://rafaltruszkowski.com/improving-dockerized-projects-in-wsl2-move-your-files-to-the-linux-filesystem-for-faster-io-performance/)
 
 ---
-comments: true
+
 
 希望这篇文章能帮你找到属于自己的生产力方案。记住：没有最好的配置，只有最适合你的配置。
