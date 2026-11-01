@@ -1,0 +1,66 @@
+<button id="back-to-top" class="back-to-top" type="button" aria-label="返回顶部" title="返回顶部" hidden>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M6 12L12 6L18 12M12 6V19" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <span>返回顶部</span>
+</button>
+
+<script>
+  const backToTop = document.querySelector<HTMLButtonElement>('#back-to-top');
+
+  if (backToTop) {
+    const updateVisibility = () => {
+      backToTop.hidden = window.scrollY <= 400;
+    };
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('pageshow', updateVisibility);
+    updateVisibility();
+
+    backToTop.addEventListener('click', () => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reducedMotion ? 'instant' : 'smooth' });
+    });
+  }
+</script>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    right: calc(1.5rem + env(safe-area-inset-right, 0px));
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--cream-300);
+    border-radius: 100px;
+    background: var(--cream-100);
+    color: var(--warm-900);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .back-to-top[hidden] { display: none; }
+  .back-to-top svg { flex-shrink: 0; }
+  .back-to-top:hover { background: var(--cream-200); color: var(--terracotta); }
+  .back-to-top:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 4px; }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      right: calc(1rem + env(safe-area-inset-right, 0px));
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top { transition: none; }
+  }
+</style>

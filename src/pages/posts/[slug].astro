@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import Comments from '../../components/Comments.astro';
+import BackToTop from '../../components/BackToTop.astro';
 import { getCollection, render } from 'astro:content';
 import { formatDate, getReadingTime } from '../../lib/utils';
 
@@ -54,6 +55,7 @@ const readingTime = getReadingTime(post.body || '');
       {post.data.comments && <Comments />}
     </article>
   </main>
+  <BackToTop />
 </Layout>
 
 <script>
