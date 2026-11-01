@@ -1,0 +1,103 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+}
+
+const { currentPage, totalPages } = Astro.props;
+const pageUrl = (page: number) => page === 1 ? '/posts' : `/posts/${page}`;
+---
+
+<nav class="pagination" aria-label="文章分页">
+  <div class="page-controls">
+    {currentPage > 1 ? (
+      <a href={pageUrl(currentPage - 1)} class="page-btn" rel="prev">上一页</a>
+    ) : (
+      <button type="button" class="page-btn" disabled>上一页</button>
+    )}
+    <span class="page-info" aria-current="page">第 {currentPage} / {totalPages} 页</span>
+    {currentPage < totalPages ? (
+      <a href={pageUrl(currentPage + 1)} class="page-btn" rel="next">下一页</a>
+    ) : (
+      <button type="button" class="page-btn" disabled>下一页</button>
+    )}
+  </div>
+  <form class="page-jump" data-total-pages={totalPages}>
+    <label for="page-number">跳至</label>
+    <input id="page-number" name="page" type="number" inputmode="numeric" min="1" max={totalPages} step="1" value={currentPage} required aria-label="跳转页码" />
+    <span>页</span>
+    <button type="submit" class="page-btn">跳转</button>
+  </form>
+</nav>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('.page-jump').forEach((form) => {
+    const input = form.querySelector<HTMLInputElement>('input[name="page"]');
+    const totalPages = Number(form.dataset.totalPages);
+    if (!input) return;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const targetPage = input.valueAsNumber;
+      if (!Number.isInteger(targetPage) || targetPage < 1 || targetPage > totalPages) {
+        input.reportValidity();
+        return;
+      }
+      window.location.assign(targetPage === 1 ? '/posts' : `/posts/${targetPage}`);
+    });
+  });
+</script>
+
+<style>
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--cream-300);
+  }
+  .page-controls, .page-jump { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+  .page-info, .page-jump { font-size: 0.875rem; color: var(--warm-700); white-space: nowrap; }
+  .page-jump { gap: 0.5rem; }
+  .page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.5rem 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--warm-700);
+    background: var(--cream-100);
+    border: 1px solid var(--cream-300);
+    border-radius: 100px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .page-btn:not(:disabled):hover { background: var(--warm-900); border-color: var(--warm-900); color: var(--cream-50); }
+  .page-btn:disabled { color: var(--warm-400); background: var(--cream-200); cursor: not-allowed; }
+  .page-jump input {
+    width: 4.25rem;
+    min-height: 44px;
+    padding: 0.5rem;
+    border: 1px solid var(--cream-300);
+    border-radius: 8px;
+    background: var(--cream-100);
+    color: var(--warm-900);
+    font: inherit;
+    text-align: center;
+  }
+  .page-btn:focus-visible, .page-jump input:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 4px; }
+  @media (max-width: 480px) {
+    .page-controls { gap: 0.75rem; }
+    .page-btn { padding-inline: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-btn { transition: none; }
+  }
+</style>

@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Pagination from '../../components/Pagination.astro';
 import { getSortedPosts, formatDate, getReadingTime } from '../../lib/utils';
 
 const allPosts = await getSortedPosts();
 const posts = allPosts.slice(0, 10);
-const hasMore = allPosts.length > 10;
+const totalPages = Math.max(1, Math.ceil(allPosts.length / 10));
 ---
 
 <Layout title="文章 - Yunqing's Blog" description="所有文章，关于编程、设计与生活。" active="posts">
@@ -33,11 +34,7 @@ const hasMore = allPosts.length > 10;
       ))}
     </section>
 
-    {hasMore && (
-      <nav class="pagination">
-        <a href="/posts/2" class="page-btn">下一页</a>
-      </nav>
-    )}
+    <Pagination currentPage={1} totalPages={totalPages} />
   </main>
 </Layout>
 
@@ -75,31 +72,6 @@ const hasMore = allPosts.length > 10;
   .post-tags { display: flex; gap: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .post-tags::-webkit-scrollbar { display: none; }
   .tag { flex-shrink: 0; font-size: 0.75rem; font-weight: 500; color: var(--warm-700); background: var(--cream-200); padding: 0.25rem 0.75rem; border-radius: 100px; white-space: nowrap; letter-spacing: 0.02em; }
-
-  .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--cream-300);
-  }
-  .page-btn {
-    padding: 0.5rem 1.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--warm-700);
-    background: var(--cream-100);
-    border: 1px solid var(--cream-300);
-    border-radius: 100px;
-    transition: all 0.2s ease;
-  }
-  .page-btn:hover {
-    background: var(--warm-900);
-    border-color: var(--warm-900);
-    color: var(--cream-50);
-  }
 
   @media (max-width: 768px) {
     .page-header { padding: 2rem 0 2.5rem; }

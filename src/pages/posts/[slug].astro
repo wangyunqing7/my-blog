@@ -23,6 +23,12 @@ const readingTime = getReadingTime(post.body || '');
   <main>
     <article class="article">
       <header class="article-header">
+        <a href="/posts" class="back-link article-back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          返回文章列表
+        </a>
         <div class="article-meta">
           <time>{formatDate(post.data.date)}</time>
           <span class="dot">&middot;</span>
@@ -104,6 +110,8 @@ const readingTime = getReadingTime(post.body || '');
   .article-footer { margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--cream-300); }
   .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--warm-500); transition: color 0.2s ease; }
   .back-link:hover { color: var(--terracotta); }
+  .back-link:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 4px; }
+  .article-back-link { min-height: 44px; padding: 0.5rem 0.875rem; margin-bottom: 1.25rem; border: 1px solid var(--cream-300); border-radius: 100px; background: var(--cream-100); color: var(--warm-700); }
   @media (max-width: 768px) { main { padding: 0 1.25rem 3rem; } .article-content { font-size: 1rem; } }
   @media (max-width: 480px) { main { padding: 0 1rem 3rem; } }
 </style>
